@@ -11,27 +11,21 @@
   <name>Kiview</name>
   <summary>Quick preview of various file types.</summary>
   <description>
-  <p>KiView allows you to have a quick preview of different files in dolphin.</p>
+  <p>Kiview gives the user the ability to quickly preview different file types without the need to launch the default application.</p>
+  <p>Known Issues:</p>
+  <p>Currently due to the way it integrates with dolphin, the last item copied to the clipboard is modified and then restored. This isn't a problem if it's just text, but unfortunately it can't restore the contents if the last item copied was a folder or file.</p>
   <p>Supported file types:</p>
-  <p>.txt,.sh,.pdf,.doc.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.kra,.svgz,.sgv,.mp4,.mp3,.webm,.zip,.gz,.xz,.rar</p>
-<!--    <ul>
-      <li>this</li>
-      <li>that</li>
-    </ul>-->
+  <p>.txt,.sh,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.kra,.svgz,.svg,.mp4,.mp3,.webm,.zip,.gz,.xz,.rar</p>
   </description>
   <url type="bugtracker">https://github.com/Nyre221/Kiview</url>
   <url type="homepage">https://github.com/Nyre221/Kiview</url>
   <url type="donation">https://www.paypal.com/donate/?hosted_button_id=J7QU55MMUP4G4</url>
   <launchable type="desktop-id">com.nyre.kiview.desktop</launchable>
-<!--   <screenshots> -->
-<!--     <screenshot type="default"> -->
-<!--      <image>
-        see https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-screenshots
-        Central hosting for uploading at https://invent.kde.org/websites/product-screenshots
-        Central URL to use here https://cdn.kde.org/screenshots/...
-      </image>-->
-<!--     </screenshot> -->
-<!--   </screenshots> -->
+  <screenshots>
+    <screenshot type="default">
+     <image>https://i.imgur.com/QQzOqEQ.jpg</image>
+   </screenshot>
+ </screenshots>
   <provides>
     <binary>kiview</binary>
   </provides>
