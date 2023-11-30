@@ -1,0 +1,218 @@
+# SPDX-FileCopyrightText: 2023 YEAR 2023
+# This file is distributed under the same license as the PACKAGE package.
+#
+# SPDX-FileCopyrightText: 2023 danilo agostini <nyre334@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: nyre334@gmail.com\n"
+"POT-Creation-Date: 2023-11-29 23:53+0100\n"
+"PO-Revision-Date: 2023-11-26 22:01+0100\n"
+"Last-Translator: nyre <nessuno>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.2\n"
+
+#: src/containerviewer.cpp:106
+#, kde-format
+msgid "Preview not available: File too big"
+msgstr "Anteprima non disponibile: File troppo grande"
+
+#: src/containerviewer.cpp:148
+#, kde-format
+msgid "Package not installed:"
+msgstr "Pacchetto non installato:"
+
+#: src/containerviewer.cpp:175
+#, kde-format
+msgid "File took to long to load"
+msgstr "Il file ha impiegato troppo tempo a caricare"
+
+#: src/containerviewer.cpp:177
+#, kde-format
+msgid "Error:"
+msgstr "Errore:"
+
+#: src/contents/ui/ContainerViewerUI.qml:45
+#, kde-format
+msgid "Size"
+msgstr "Dimensione"
+
+#: src/contents/ui/ContainerViewerUI.qml:75
+#, kde-format
+msgid "Last Modified"
+msgstr "Ultima modifica"
+
+#: src/contents/ui/ContainerViewerUI.qml:105
+#, kde-format
+msgid "File Count"
+msgstr "Numero File"
+
+#: src/contents/ui/DocumentViewerUi.qml:16
+#, kde-format
+msgid "Look Here!"
+msgstr "Guarda qui!"
+
+#: src/contents/ui/DocumentViewerUi.qml:103
+#, kde-format
+msgid "Reload"
+msgstr "Ricarica"
+
+#: src/contents/ui/FallbackViewerUi.qml:27
+#, kde-format
+msgid "File type not supported."
+msgstr "Tipo di file non supportato."
+
+#: src/contents/ui/main.qml:73 src/contents/ui/ViewersLoader.qml:235
+#, kde-format
+msgid "How it works"
+msgstr "Come funziona"
+
+#: src/contents/ui/ViewersLoader.qml:109
+#, kde-format
+msgid "Info"
+msgstr "Informazioni"
+
+#: src/contents/ui/ViewersLoader.qml:121
+#, kde-format
+msgid "Shortcuts"
+msgstr "Scorciatoie"
+
+#: src/contents/ui/ViewersLoader.qml:133
+#, kde-format
+msgid "General"
+msgstr "Generale"
+
+#: src/contents/ui/ViewersLoader.qml:143
+#, kde-format
+msgid "Arrow keys (Left, Right), A, D:"
+msgstr "Frecce direzionali (Sinistra, Destra), A, D:"
+
+#: src/contents/ui/ViewersLoader.qml:143
+#, kde-format
+msgid "Scroll through files."
+msgstr "Scorri tra i file"
+
+#: src/contents/ui/ViewersLoader.qml:153
+#, kde-format
+msgid "Enter:"
+msgstr "Invio:"
+
+#: src/contents/ui/ViewersLoader.qml:153
+#, kde-format
+msgid "Open file in default application."
+msgstr "Apri il file nell'applicazione predefinita."
+
+#: src/contents/ui/ViewersLoader.qml:162
+#, kde-format
+msgid "Documents"
+msgstr "Documenti"
+
+#: src/contents/ui/ViewersLoader.qml:172
+#, kde-format
+msgid "Arrow keys (Up, Down), pageUp, pageDown:"
+msgstr "Frecce direzionali (Su, Giu), pageSu, pageGiu:"
+
+#: src/contents/ui/ViewersLoader.qml:172
+#, kde-format
+msgid "Scroll between pages."
+msgstr "Scorri tra le pagine"
+
+#: src/contents/ui/ViewersLoader.qml:181
+#, kde-format
+msgid "Video player"
+msgstr "Riproduttore"
+
+#: src/contents/ui/ViewersLoader.qml:191
+#, kde-format
+msgid "Arrow keys (Up, Down):"
+msgstr "Frecce direzionali (Su, Giu):"
+
+#: src/contents/ui/ViewersLoader.qml:191
+#, kde-format
+msgid "Scroll through the track."
+msgstr "Scorri nella traccia."
+
+#: src/contents/ui/ViewersLoader.qml:200
+#, kde-format
+msgid "E:"
+msgstr ""
+
+#: src/contents/ui/ViewersLoader.qml:200
+#, kde-format
+msgid "pause/play."
+msgstr "pausa/riproduci"
+
+#: src/contents/ui/ViewersLoader.qml:209
+#, kde-format
+msgid "Folders and archives"
+msgstr "Cartelle e archivi"
+
+#: src/contents/ui/ViewersLoader.qml:219
+#, kde-format
+msgid "Arrow keys (Up, Down), W, S:"
+msgstr "Frecce direzionali (Su, Giu), W, S: "
+
+#: src/contents/ui/ViewersLoader.qml:219
+#, kde-format
+msgid "Scroll through the list."
+msgstr "Scorri nella lista"
+
+#: src/contents/ui/ViewersLoader.qml:249
+#, kde-format
+msgid "Support me"
+msgstr "Sostienimi"
+
+#: src/documentviewer.cpp:290
+#, kde-format
+msgid "Preview not available."
+msgstr "Anteprima non disponibile. "
+
+#: src/documentviewer.cpp:293
+#, kde-format
+msgid "The document took too long to load."
+msgstr "Il documento ha impiegato troppo tempo a caricare."
+
+#: src/documentviewer.cpp:297
+#, kde-format
+msgid "Something went wrong."
+msgstr "Qualcosa è andato storto."
+
+#: src/documentviewer.cpp:303
+#, kde-format
+msgid "File not found: Flatpak may not be configured correctly:"
+msgstr ""
+"File non trovato: Flatpak potrebbe non essere configurato correttamente:"
+
+#: src/documentviewer.cpp:308
+#, kde-format
+msgid "Libreoffice is not installed:"
+msgstr "Libreoffice non è installato:"
+
+#: src/dolphinbridge.cpp:39
+#, kde-format
+msgid "Unable to connect to the session bus."
+msgstr "Impossibile connettersi al bus di sessione"
+
+#: src/dolphinbridge.cpp:126
+#, kde-format
+msgid "Error: Invalid Path"
+msgstr "Errore: Percorso non valido"
+
+#: src/dolphinbridge.cpp:214
+#, kde-format
+msgid "No active dolphin window found"
+msgstr "Nessuna finestra attiva di dolphin trovata"
+
+#: src/imageviewer.cpp:39
+#, kde-format
+msgid "unzip package not installed"
+msgstr "Pacchetto unzip non installato"
+
+#, kde-format
+#~ msgid "Donate"
+#~ msgstr "Dona"

@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.qml">contents/ui/main.qml</file>
+        <file>contents/ui/NavButtons.qml</file>
+        <file>contents/ui/ImageViewerUi.qml</file>
+        <file>contents/ui/TextViewerUi.qml</file>
+        <file>contents/ui/ViewersLoader.qml</file>
+        <file>contents/ui/DocumentViewerUi.qml</file>
+        <file>contents/ui/VideoViewerUi.qml</file>
+        <file>contents/ui/OpenAppButton.qml</file>
+        <file>contents/ui/FallbackViewerUi.qml</file>
+        <file>contents/ui/ContainerViewerUI.qml</file>
+    </qresource>
+</RCC>
