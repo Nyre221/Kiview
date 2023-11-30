@@ -22,7 +22,7 @@
   <url type="bugtracker">https://github.com/Nyre221/Kiview</url>
   <url type="homepage">https://github.com/Nyre221/Kiview</url>
   <url type="donation">https://www.paypal.com/donate/?hosted_button_id=J7QU55MMUP4G4</url>
-  <launchable type="desktop-id">com.nyre.kiview</launchable>
+  <launchable type="desktop-id">com.nyre.kiview.desktop</launchable>
 <!--   <screenshots> -->
 <!--     <screenshot type="default"> -->
 <!--      <image>
