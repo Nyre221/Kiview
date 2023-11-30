@@ -17,7 +17,7 @@
 
    ],
    "cleanup-commands":[ "/app/cleanup-BaseApp.sh"],
-   "id": "org.kde.kiview",
+   "id": "com.nyre.kiview",
    "modules": [
       {
          "buildsystem": "cmake-ninja",

@@ -36,8 +36,8 @@ add_subdirectory(icons)
 
 
 
-install(PROGRAMS org.kde.kiview.desktop DESTINATION ${KDE_INSTALL_APPDIR})
-install(FILES org.kde.kiview.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+install(PROGRAMS com.nyre.kiview.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(FILES com.nyre.kiview.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 
 

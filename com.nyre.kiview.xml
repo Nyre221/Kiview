@@ -5,7 +5,7 @@
  -->
 
 <component type="desktop-application">
-  <id>org.kde.kiview</id>
+  <id>com.nyre.kiview</id>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0</project_license>
   <name>Kiview</name>
@@ -20,10 +20,9 @@
     </ul>-->
   </description>
   <url type="bugtracker">https://github.com/Nyre221/Kiview</url>
-<!--   <url type="homepage">https://www.kde.org</url> -->
-<!--   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=$YOURPRODUCTNAME</url> -->
+  <url type="homepage">https://github.com/Nyre221/Kiview</url>
   <url type="donation">https://www.paypal.com/donate/?hosted_button_id=J7QU55MMUP4G4</url>
-  <launchable type="desktop-id">org.kde.kiview.desktop</launchable>
+  <launchable type="desktop-id">com.nyre.kiview</launchable>
 <!--   <screenshots> -->
 <!--     <screenshot type="default"> -->
 <!--      <image>
@@ -36,7 +35,7 @@
   <provides>
     <binary>kiview</binary>
   </provides>
-  <project_group>KDE</project_group>
+  <project_group>nyre</project_group>
 </component>
 
 

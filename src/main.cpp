@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("kiview");
-    QCoreApplication::setOrganizationName(QStringLiteral("KDE"));
-    QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
+    QCoreApplication::setOrganizationName(QStringLiteral("nyre"));
+    QCoreApplication::setOrganizationDomain(QStringLiteral("nyre.com"));
     QCoreApplication::setApplicationName(QStringLiteral("KiView"));
 
 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&app, SIGNAL(aboutToQuit()), &Manager, SLOT(closing()));
     //sets the icon of the app
-    app.setWindowIcon(QIcon::fromTheme("org.kde.kiview"));
+    app.setWindowIcon(QIcon::fromTheme("com.nyre.kiview"));
 
 
     return app.exec();
