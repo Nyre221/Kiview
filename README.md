@@ -19,3 +19,4 @@ Any key combination is fine to activate the shortcut and it is only necessary to
 ![Screenshot-30-11-2023-CET-10](https://github.com/Nyre221/Kiview/assets/104171042/37b1fb2c-5e89-48fb-b5cf-25750734fd14)
 
 
+Support me: https://www.paypal.com/donate/?hosted_button_id=J7QU55MMUP4G4
