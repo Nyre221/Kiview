@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
+
     KLocalizedString::setApplicationDomain("kiview");
     QCoreApplication::setOrganizationName(QStringLiteral("nyre"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("nyre.com"));
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     ContentManager Manager;
     //to get information from dolphin.
     DolphinBridge*  bridge = new DolphinBridge;
-    bridge->start(&Manager);
+    bridge->start(&Manager,argv,argc);
 
     //registers ContentManager as a singleton so it can be accessed from qml.
     qmlRegisterSingletonInstance<ContentManager>("CManager", 1, 0, "Manager", &Manager);

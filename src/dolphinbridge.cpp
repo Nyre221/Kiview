@@ -1,6 +1,7 @@
 //SPDX-License-Identifier: GPL-3.0-or-later
 //SPDX-FileCopyrightText: 2023 danilo agostini <nyre334@gmail.com>
 #include "dolphinbridge.h"
+#include "qapplication.h"
 #include <contentmanager.h>
 #include <QtCore/QDebug>
 #include <QtCore/QStringList>
@@ -19,7 +20,7 @@ DolphinBridge::DolphinBridge(QObject *parent)
 
 }
 
-void DolphinBridge::start(ContentManager *Manager)
+void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
 {
 
     //used for testing
@@ -72,7 +73,7 @@ void DolphinBridge::start(ContentManager *Manager)
 
 
     //search for the active dolphin window from which to take the file path.
-    const auto[activeDolphinWindow, errorGetActiveDolphinInstance] =  getActiveDolphinWindow(bus);
+    const auto[activeDolphinWindow, errorGetActiveDolphinInstance] =  getActiveDolphinWindow(bus,argv,argc);
 
     if ( errorGetActiveDolphinInstance != ""){
         //print error
@@ -187,7 +188,7 @@ QString DolphinBridge::sendInvertSectionSignal(QDBusConnection bus, QString dolp
 
 
 
-std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnection bus)
+std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnection bus, char *argv[], int argc)
 {
     QString activeWindow;
     QString errorMessage;
@@ -208,10 +209,19 @@ std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnectio
         }
     }
 
-
     if (activeWindow.isEmpty()){
         qDebug() << "No active dolphin window found";
         errorMessage = i18n("No active dolphin window found");
+
+        //closes the program if the second argument indicates that kview was started with the shortcut.
+        if (argc > 1){
+            std::string firstParamenter = argv[1];
+            if (!firstParamenter.compare("-s") ){
+                exit(1);
+            }
+        }
+
+
     }
 
 

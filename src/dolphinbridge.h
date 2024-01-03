@@ -11,12 +11,12 @@ class DolphinBridge : public QObject
 
 public:
     explicit DolphinBridge(QObject *parent = nullptr);
-    void start(ContentManager* Manager);
+    void start(ContentManager* Manager, char *argv[], int argc);
 
 
 private:
     std::tuple<QString,QString> getClipboardContent(QDBusConnection bus);
-    std::tuple<QString,QString> getActiveDolphinWindow(QDBusConnection bus);
+    std::tuple<QString,QString> getActiveDolphinWindow(QDBusConnection bus, char *argv[], int argc);
     QString setClipboardContent(QDBusConnection bus, QString content);
     QString sendCopyFileLocationSignal(QDBusConnection bus, QString dolphinWindow);
     QString sendSelectAllSignal(QDBusConnection bus, QString dolphinWindow);
