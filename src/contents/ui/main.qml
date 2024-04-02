@@ -1,12 +1,13 @@
 //SPDX-License-Identifier: GPL-3.0-or-later
 //SPDX-FileCopyrightText: 2023 danilo agostini <nyre334@gmail.com>
-import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
-import QtQuick.Layouts 1.15
-import org.kde.kirigami 2.20 as Kirigami
+import QtQuick
+import QtCore
+import QtQuick.Controls as Controls
+import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
 import "contents/ui"
 import CManager 1.0
-import QtQuick.Window 2.0
+import QtQuick.Window
 
 Kirigami.ApplicationWindow {
     id: root
@@ -15,6 +16,12 @@ Kirigami.ApplicationWindow {
     height: Screen.height*0.6
     minimumHeight: Screen.height*0.4
     minimumWidth: Screen.width*0.35
+
+
+    Settings {
+        property alias width: root.width
+        property alias height: root.height
+    }
 
 
 
@@ -35,18 +42,16 @@ Kirigami.ApplicationWindow {
         onActivated: Manager.goForward()
     }
 
-    pageStack.initialPage:kiriPage
-
-
-    Kirigami.Page{
+    pageStack.initialPage: Kirigami.Page{
     id:kiriPage
-    padding: 0
-
+    padding: 6
     title: Manager.fileName
-    contextualActions: viewersLoader.actions
+    actions: viewersLoader.actions
+
 
 
             ViewersLoader{id: viewersLoader}
+            // TestComponent{}
             NavButtons{}
             Text{
                 id:generalErrorMessage

@@ -16,6 +16,7 @@ std::vector<std::string> mediaExtensions{".mp4",".mp3",".webm"};
 std::vector<std::string> containerExtensions{".zip",".gz",".xz",".rar"};
 int currentIndex = 0;
 
+
 ContentManager::ContentManager(QObject *parent)
     : QObject{parent}
 {
@@ -124,10 +125,10 @@ void ContentManager::loadFileAtIndex(int index){
 
     QString titleBarText;
     if (parentInIndex){
-        titleBarText = QString("[") + QString::number(index) + QString("/") + QString::number(files.size()-1) +QString("]");
+        titleBarText = QStringLiteral("[") + QString::number(index) + QStringLiteral("/") + QString::number(files.size()-1) +QStringLiteral("]");
     }
     else{
-        titleBarText = QString("[") + QString::number(index+1) + QString("/") + QString::number(files.size()) +QString("]");
+        titleBarText = QStringLiteral("[") + QString::number(index+1) + QStringLiteral("/") + QString::number(files.size()) +QStringLiteral("]");
     }
 
     setWindowTitle(titleBarText);
@@ -145,35 +146,35 @@ void ContentManager::loadFileAtIndex(int index){
     //load the file with the correct viewer.
     if (std::filesystem::is_directory(currentFilePath)) {
         m_containerViewer->loadFile(currentFilePath.string(),false,"");
-        setCurrentViewer("container_viewer");
+        setCurrentViewer(QStringLiteral("container_viewer"));
     }
     else if(std::find(std::begin(textExtensions), std::end(textExtensions), extension) != std::end(textExtensions)) {
         m_textViewer->loadFile(currentFilePath.string());
-        setCurrentViewer("text_viewer");
+        setCurrentViewer(QStringLiteral("text_viewer"));
     }
     else if (std::find(std::begin(docExtensions), std::end(docExtensions), extension) != std::end(docExtensions)) {
         m_documentViewer->loadFile(currentFilePath.string(),extension);
-        setCurrentViewer("document_viewer");
+        setCurrentViewer(QStringLiteral("document_viewer"));
     }
     else if (std::find(std::begin(imgExtensions), std::end(imgExtensions), extension) != std::end(imgExtensions)) {
         m_imageViewer->loadFile(currentFilePath.string(),extension);
-        setCurrentViewer("image_viewer");
+        setCurrentViewer(QStringLiteral("image_viewer"));
     }
     else if (std::find(std::begin(mediaExtensions), std::end(mediaExtensions), extension) != std::end(mediaExtensions)) {
         m_videoViewer->loadFile(currentFilePath.string());
-        setCurrentViewer("video_viewer");
+        setCurrentViewer(QStringLiteral("video_viewer"));
     }
     else if (std::find(std::begin(containerExtensions), std::end(containerExtensions), extension) != std::end(containerExtensions)) {
         m_containerViewer->loadFile(currentFilePath.string(),true,extension);
-        setCurrentViewer("container_viewer");
+        setCurrentViewer(QStringLiteral("container_viewer"));
     }
     else if (! (system(command.c_str()))) {
         //uses a subprocess to figure out if it's a plain text file.
         m_textViewer->loadFile(currentFilePath.string());
-        setCurrentViewer("text_viewer");
+        setCurrentViewer(QStringLiteral("text_viewer"));
     }
     else{
-        setCurrentViewer("fallback_viewer");
+        setCurrentViewer(QStringLiteral("fallback_viewer"));
     }
 
 
@@ -225,8 +226,8 @@ void ContentManager::openApp()
     process.setStandardInputFile(QProcess::nullDevice());
     process.setStandardOutputFile(QProcess::nullDevice());
 
-    process.setProgram("xdg-open");
-    process.setArguments(QStringList() << currentFilePath.string().c_str());
+    process.setProgram(QStringLiteral("xdg-open"));
+    process.setArguments(QStringList() << QString().fromStdString(currentFilePath.string().c_str()));
     process.startDetached();
 
     QApplication::quit();
@@ -275,7 +276,7 @@ void ContentManager::setCurrentViewer(const QString &newCurrentViewer)
     if (m_currentViewer == newCurrentViewer)
         return;
     m_currentViewer = newCurrentViewer;
-    emit currentViewerChanged();
+    Q_EMIT currentViewerChanged();
 }
 
 QString ContentManager::fileName() const
@@ -288,7 +289,7 @@ void ContentManager::setFileName(const QString &newFileName)
     if (m_fileName == newFileName)
         return;
     m_fileName = newFileName;
-    emit fileNameChanged();
+    Q_EMIT fileNameChanged();
 }
 
 
@@ -312,7 +313,7 @@ void ContentManager::setWindowTitle(const QString &newWindowTitle)
     if (m_windowTitle == newWindowTitle)
         return;
     m_windowTitle = newWindowTitle;
-    emit windowTitleChanged();
+    Q_EMIT windowTitleChanged();
 }
 
 
@@ -326,5 +327,5 @@ void ContentManager::setDolphinBridgeErrorMessage(const QString &newDolphinBridg
     if (m_dolphinBridgeErrorMessage == newDolphinBridgeErrorMessage)
         return;
     m_dolphinBridgeErrorMessage = newDolphinBridgeErrorMessage;
-    emit dolphinBridgeErrorMessageChanged();
+    Q_EMIT dolphinBridgeErrorMessageChanged();
 }

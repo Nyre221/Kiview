@@ -15,7 +15,7 @@ public:
     void setViewerText(const QString &newViewerText);
     void loadFile(std::string filePath);
 
-signals:
+Q_SIGNALS:
 
     void viewerTextChanged();
 private:

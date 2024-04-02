@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: nyre334@gmail.com\n"
-"POT-Creation-Date: 2023-11-29 23:53+0100\n"
+"POT-Creation-Date: 2024-04-02 05:39+0200\n"
 "PO-Revision-Date: 2023-11-26 22:01+0100\n"
 "Last-Translator: nyre <nessuno>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -37,27 +37,29 @@ msgstr "Il file ha impiegato troppo tempo a caricare"
 msgid "Error:"
 msgstr "Errore:"
 
-#: src/contents/ui/ContainerViewerUI.qml:45
+#: src/contents/ui/ContainerViewerUI.qml:46
 #, kde-format
 msgid "Size"
 msgstr "Dimensione"
 
-#: src/contents/ui/ContainerViewerUI.qml:75
+#: src/contents/ui/ContainerViewerUI.qml:76
 #, kde-format
 msgid "Last Modified"
 msgstr "Ultima modifica"
 
-#: src/contents/ui/ContainerViewerUI.qml:105
+#: src/contents/ui/ContainerViewerUI.qml:106
 #, kde-format
 msgid "File Count"
 msgstr "Numero File"
 
+#: src/contents/ui/DocumentViewerUi_deprecated.qml:16
 #: src/contents/ui/DocumentViewerUi.qml:16
 #, kde-format
 msgid "Look Here!"
 msgstr "Guarda qui!"
 
-#: src/contents/ui/DocumentViewerUi.qml:103
+#: src/contents/ui/DocumentViewerUi_deprecated.qml:100
+#: src/contents/ui/DocumentViewerUi.qml:87
 #, kde-format
 msgid "Reload"
 msgstr "Ricarica"
@@ -67,143 +69,163 @@ msgstr "Ricarica"
 msgid "File type not supported."
 msgstr "Tipo di file non supportato."
 
-#: src/contents/ui/main.qml:73 src/contents/ui/ViewersLoader.qml:235
-#, kde-format
-msgid "How it works"
-msgstr "Come funziona"
-
-#: src/contents/ui/ViewersLoader.qml:109
+#: src/contents/ui/InfoDialog.qml:9
+#: src/contents/ui/ViewersLoader_deprecated.qml:109
 #, kde-format
 msgid "Info"
 msgstr "Informazioni"
 
-#: src/contents/ui/ViewersLoader.qml:121
+#: src/contents/ui/InfoDialog.qml:21
+#: src/contents/ui/ViewersLoader_deprecated.qml:121
 #, kde-format
 msgid "Shortcuts"
 msgstr "Scorciatoie"
 
-#: src/contents/ui/ViewersLoader.qml:133
+#: src/contents/ui/InfoDialog.qml:33
+#: src/contents/ui/ViewersLoader_deprecated.qml:133
 #, kde-format
 msgid "General"
 msgstr "Generale"
 
-#: src/contents/ui/ViewersLoader.qml:143
+#: src/contents/ui/InfoDialog.qml:43
+#: src/contents/ui/ViewersLoader_deprecated.qml:143
 #, kde-format
 msgid "Arrow keys (Left, Right), A, D:"
 msgstr "Frecce direzionali (Sinistra, Destra), A, D:"
 
-#: src/contents/ui/ViewersLoader.qml:143
+#: src/contents/ui/InfoDialog.qml:43
+#: src/contents/ui/ViewersLoader_deprecated.qml:143
 #, kde-format
 msgid "Scroll through files."
 msgstr "Scorri tra i file"
 
-#: src/contents/ui/ViewersLoader.qml:153
+#: src/contents/ui/InfoDialog.qml:53
+#: src/contents/ui/ViewersLoader_deprecated.qml:153
 #, kde-format
 msgid "Enter:"
 msgstr "Invio:"
 
-#: src/contents/ui/ViewersLoader.qml:153
+#: src/contents/ui/InfoDialog.qml:53
+#: src/contents/ui/ViewersLoader_deprecated.qml:153
 #, kde-format
 msgid "Open file in default application."
 msgstr "Apri il file nell'applicazione predefinita."
 
-#: src/contents/ui/ViewersLoader.qml:162
+#: src/contents/ui/InfoDialog.qml:62
+#: src/contents/ui/ViewersLoader_deprecated.qml:162
 #, kde-format
 msgid "Documents"
 msgstr "Documenti"
 
-#: src/contents/ui/ViewersLoader.qml:172
+#: src/contents/ui/InfoDialog.qml:72
+#: src/contents/ui/ViewersLoader_deprecated.qml:172
 #, kde-format
 msgid "Arrow keys (Up, Down), pageUp, pageDown:"
 msgstr "Frecce direzionali (Su, Giu), pageSu, pageGiu:"
 
-#: src/contents/ui/ViewersLoader.qml:172
+#: src/contents/ui/InfoDialog.qml:72
+#: src/contents/ui/ViewersLoader_deprecated.qml:172
 #, kde-format
 msgid "Scroll between pages."
 msgstr "Scorri tra le pagine"
 
-#: src/contents/ui/ViewersLoader.qml:181
+#: src/contents/ui/InfoDialog.qml:81
+#: src/contents/ui/ViewersLoader_deprecated.qml:181
 #, kde-format
 msgid "Video player"
 msgstr "Riproduttore"
 
-#: src/contents/ui/ViewersLoader.qml:191
+#: src/contents/ui/InfoDialog.qml:91
+#: src/contents/ui/ViewersLoader_deprecated.qml:191
 #, kde-format
 msgid "Arrow keys (Up, Down):"
 msgstr "Frecce direzionali (Su, Giu):"
 
-#: src/contents/ui/ViewersLoader.qml:191
+#: src/contents/ui/InfoDialog.qml:91
+#: src/contents/ui/ViewersLoader_deprecated.qml:191
 #, kde-format
 msgid "Scroll through the track."
 msgstr "Scorri nella traccia."
 
-#: src/contents/ui/ViewersLoader.qml:200
+#: src/contents/ui/InfoDialog.qml:100
+#: src/contents/ui/ViewersLoader_deprecated.qml:200
 #, kde-format
 msgid "E:"
 msgstr ""
 
-#: src/contents/ui/ViewersLoader.qml:200
+#: src/contents/ui/InfoDialog.qml:100
+#: src/contents/ui/ViewersLoader_deprecated.qml:200
 #, kde-format
 msgid "pause/play."
 msgstr "pausa/riproduci"
 
-#: src/contents/ui/ViewersLoader.qml:209
+#: src/contents/ui/InfoDialog.qml:109
+#: src/contents/ui/ViewersLoader_deprecated.qml:209
 #, kde-format
 msgid "Folders and archives"
 msgstr "Cartelle e archivi"
 
-#: src/contents/ui/ViewersLoader.qml:219
+#: src/contents/ui/InfoDialog.qml:119
+#: src/contents/ui/ViewersLoader_deprecated.qml:219
 #, kde-format
 msgid "Arrow keys (Up, Down), W, S:"
 msgstr "Frecce direzionali (Su, Giu), W, S: "
 
-#: src/contents/ui/ViewersLoader.qml:219
+#: src/contents/ui/InfoDialog.qml:119
+#: src/contents/ui/ViewersLoader_deprecated.qml:219
 #, kde-format
 msgid "Scroll through the list."
 msgstr "Scorri nella lista"
 
-#: src/contents/ui/ViewersLoader.qml:249
+#: src/contents/ui/InfoDialog.qml:135 src/contents/ui/main.qml:78
+#: src/contents/ui/ViewersLoader_deprecated.qml:235
+#, kde-format
+msgid "How it works"
+msgstr "Come funziona"
+
+#: src/contents/ui/InfoDialog.qml:149
+#: src/contents/ui/ViewersLoader_deprecated.qml:249
 #, kde-format
 msgid "Support me"
 msgstr "Sostienimi"
 
-#: src/documentviewer.cpp:290
+#: src/documentviewer.cpp:291
 #, kde-format
 msgid "Preview not available."
 msgstr "Anteprima non disponibile. "
 
-#: src/documentviewer.cpp:293
+#: src/documentviewer.cpp:294
 #, kde-format
 msgid "The document took too long to load."
 msgstr "Il documento ha impiegato troppo tempo a caricare."
 
-#: src/documentviewer.cpp:297
+#: src/documentviewer.cpp:298
 #, kde-format
 msgid "Something went wrong."
 msgstr "Qualcosa è andato storto."
 
-#: src/documentviewer.cpp:303
+#: src/documentviewer.cpp:304
 #, kde-format
 msgid "File not found: Flatpak may not be configured correctly:"
 msgstr ""
 "File non trovato: Flatpak potrebbe non essere configurato correttamente:"
 
-#: src/documentviewer.cpp:308
+#: src/documentviewer.cpp:309
 #, kde-format
 msgid "Libreoffice is not installed:"
 msgstr "Libreoffice non è installato:"
 
-#: src/dolphinbridge.cpp:39
+#: src/dolphinbridge.cpp:40
 #, kde-format
 msgid "Unable to connect to the session bus."
 msgstr "Impossibile connettersi al bus di sessione"
 
-#: src/dolphinbridge.cpp:126
+#: src/dolphinbridge.cpp:137
 #, kde-format
 msgid "Error: Invalid Path"
 msgstr "Errore: Percorso non valido"
 
-#: src/dolphinbridge.cpp:214
+#: src/dolphinbridge.cpp:230
 #, kde-format
 msgid "No active dolphin window found"
 msgstr "Nessuna finestra attiva di dolphin trovata"

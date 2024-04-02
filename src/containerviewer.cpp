@@ -36,11 +36,11 @@ public:
         mainClass->setFileLastModified(stringLastModified);
 
         if (isArchive){
-            mainClass->setFileIcon("application-zip");
+            mainClass->setFileIcon(QStringLiteral("application-zip"));
             loadArchive(path,extension);
         }
         else {
-            mainClass->setFileIcon("folder-blue");
+            mainClass->setFileIcon(QStringLiteral("folder-blue"));
             loadDir(path);
         }
 
@@ -145,14 +145,14 @@ public:
             //exec not found
             qDebug() << QString().fromStdString(exec +" package not installed");
             //set error message
-            mainClass->setErrorMessageText(i18n("Package not installed:") + QString(" ") + QString().fromStdString(exec));
+            mainClass->setErrorMessageText(i18n("Package not installed:") + QStringLiteral(" ") + QString().fromStdString(exec));
             return;
         }
 
         //setsid is used to also close the children of the subprocess. not required in this case.
         QProcess process;
-        process.setProgram("setsid");
-        process.setArguments( QStringList() << "bash" << "-c" <<  QString::fromStdString(command) );
+        process.setProgram(QStringLiteral("setsid"));
+        process.setArguments( QStringList() << QStringLiteral("bash") << QStringLiteral("-c") <<  QString::fromStdString(command) );
         process.start();
         process.waitForStarted();
         mainClass->currentProcessPid = process.processId();
@@ -193,7 +193,7 @@ public:
 
 
         //removes empty strings added to the list(the newline character I think).
-        contentList.removeAll(QString(""));
+        contentList.removeAll(QStringLiteral(""));
         //sets the text in the UI
         mainClass->setFileContentCount(QString::number(contentList.count()));
         mainClass->setViewerElement(contentList);
@@ -215,18 +215,18 @@ public:
         float convertedSize = size/1024;
         //        size = size/1024;
         //starting unit
-        QString unit = "KiB";
+        QString unit = QStringLiteral("KiB");
 
         if (convertedSize > 1024){
             //convert KiB to MiB if more than 1024 KiB
             convertedSize = convertedSize/1024;
-            unit = "MiB";
+            unit = QStringLiteral("MiB");
         }
 
         if (convertedSize > 1024){
             //convert MiB to GiB if more than 1024 MiB
             convertedSize = convertedSize/1024;
-            unit = "GiB";
+            unit = QStringLiteral("GiB");
         }
 
         //removes some numbers after the decimal point.
@@ -337,11 +337,11 @@ void ContainerViewer::closeActiveSubProcess(){
 
 void ContainerViewer::resetView()
 {
-    setErrorMessageText(QString(""));
+    setErrorMessageText(QStringLiteral(""));
     setViewerElement(QStringList());
-    setFileLastModified(QString(""));
-    setFileContentCount(QString(""));
-    setFileSize(QString(""));
+    setFileLastModified(QStringLiteral(""));
+    setFileContentCount(QStringLiteral(""));
+    setFileSize(QStringLiteral(""));
 }
 
 QStringList ContainerViewer::viewerElement() const
@@ -354,7 +354,7 @@ void ContainerViewer::setViewerElement(const QStringList &newViewerElement)
     if (m_viewerElement == newViewerElement)
         return;
     m_viewerElement = newViewerElement;
-    emit viewerElementChanged();
+    Q_EMIT viewerElementChanged();
 }
 
 QString ContainerViewer::fileIcon() const
@@ -367,7 +367,7 @@ void ContainerViewer::setFileIcon(const QString &newFileIcon)
     if (m_fileIcon == newFileIcon)
         return;
     m_fileIcon = newFileIcon;
-    emit fileIconChanged();
+    Q_EMIT fileIconChanged();
 }
 
 QString ContainerViewer::fileSize() const
@@ -380,7 +380,7 @@ void ContainerViewer::setFileSize(const QString &newFileSize)
     if (m_fileSize == newFileSize)
         return;
     m_fileSize = newFileSize;
-    emit fileSizeChanged();
+    Q_EMIT fileSizeChanged();
 }
 
 QString ContainerViewer::fileSizeUnit() const
@@ -393,7 +393,7 @@ void ContainerViewer::setFileSizeUnit(const QString &newFileSizeUnit)
     if (m_fileSizeUnit == newFileSizeUnit)
         return;
     m_fileSizeUnit = newFileSizeUnit;
-    emit fileSizeUnitChanged();
+    Q_EMIT fileSizeUnitChanged();
 }
 
 QString ContainerViewer::fileContentCount() const
@@ -406,7 +406,7 @@ void ContainerViewer::setFileContentCount(const QString &newFileContentCount)
     if (m_fileContentCount == newFileContentCount)
         return;
     m_fileContentCount = newFileContentCount;
-    emit fileContentCountChanged();
+    Q_EMIT fileContentCountChanged();
 }
 
 QString ContainerViewer::fileLastModified() const
@@ -419,7 +419,7 @@ void ContainerViewer::setFileLastModified(const QString &newFileLastModified)
     if (m_fileLastModified == newFileLastModified)
         return;
     m_fileLastModified = newFileLastModified;
-    emit fileLastModifiedChanged();
+    Q_EMIT fileLastModifiedChanged();
 }
 
 QString ContainerViewer::errorMessageText() const
@@ -432,5 +432,5 @@ void ContainerViewer::setErrorMessageText(const QString &newErrorMessageText)
     if (m_errorMessageText == newErrorMessageText)
         return;
     m_errorMessageText = newErrorMessageText;
-    emit errorMessageTextChanged();
+    Q_EMIT errorMessageTextChanged();
 }

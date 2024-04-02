@@ -1,10 +1,11 @@
 //SPDX-License-Identifier: GPL-3.0-or-later
 //SPDX-FileCopyrightText: 2023 danilo agostini <nyre334@gmail.com>
-import QtQuick 2.15
-import org.kde.kirigami 2.20 as Kirigami
+import QtQuick
+import QtQuick.Controls
+import org.kde.kirigami as Kirigami
 import CManager 1.0
 Item{
-    id:fallbackPage
+    id:containerViewer
     anchors.fill: parent
     property list<Kirigami.Action> actions
     //these actions are read by viewersLoader and are shown in the "header bar" of the application.
@@ -168,12 +169,16 @@ Item{
         }
 
 
-        delegate: Kirigami.BasicListItem {
+        delegate: ItemDelegate {
             //from c++ the string "!isDir!" is added to know in qml whether it is a folder or not.
             // remove the attribute from the string
             text: modelData.replace(/(^!isDir!)/gi, "")
             //chooses the icon suitable for the file type.
-            icon: iconChooser(modelData)
+            icon.name: iconChooser(modelData)
+            width: parent.width
+            property int currentIndex :contentList.currentIndex
+            onCurrentIndexChanged:highlighted = (contentList.currentIndex === index)
+            onClicked:contentList.currentIndex = index
         }
 
 
@@ -243,3 +248,4 @@ Item{
         return icon
     }
 }
+

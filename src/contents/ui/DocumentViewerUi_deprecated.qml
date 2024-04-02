@@ -1,10 +1,10 @@
 //SPDX-License-Identifier: GPL-3.0-or-later
 //SPDX-FileCopyrightText: 2023 danilo agostini <nyre334@gmail.com>
 import QtQuick
+import QtQuick.Pdf
 import QtQuick.Controls
 import CManager 1.0
 import org.kde.kirigami as Kirigami
-import QtWebEngine
 
 
 Item{
@@ -16,23 +16,36 @@ Item{
     htmlLink: "<a href='https://github.com/Nyre221/Kiview/tree/main/extraStuff/Libreoffice%20troubleshooting'>" + i18n("Look Here!") +"</a>"
 
 
-    WebEngineView {
-        id:webView
+
+    PdfMultiPageView {
+        id:docView
         anchors.fill: parent
-        focus: true
-        url: Manager.documentViewer.viewerDocument
-        settings.pluginsEnabled: true
-        settings.pdfViewerEnabled: true
-        settings.focusOnNavigationEnabled: true
-        //hides right-click menu
-        onContextMenuRequested: {
-            request.accepted = true
-        }
+        //the margins are used to avoid covering the navigation arrows.
+        anchors.rightMargin: 25
+        anchors.leftMargin: 25
+        document: doc
+        // hides the previously viewed document when the new one has not finished loading.
         visible: ! messagePage.visible
 
 
 
+        PdfDocument {
+            id: doc
+            source: Manager.documentViewer.viewerDocument
+        }
+
+        Shortcut {
+            sequences: ["up",StandardKey.MoveToPreviousPage]
+            onActivated: if (docView.currentPage > 0) docView.goToPage(docView.currentPage-1)
+
+        }
+
+        Shortcut {
+            sequences: ["down",StandardKey.MoveToNextPage]
+            onActivated: if (docView.currentPage < doc.pageCount-1) docView.goToPage(docView.currentPage+1)
+        }
     }
+
 
     Item{
         id:messagePage

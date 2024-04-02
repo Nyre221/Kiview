@@ -22,6 +22,9 @@ public:
     std::string libreofficeCommand;
     std::string tempDir;
     DocumentViewer *mainClass;
+    // It is used to mitigate a problem that occurs when the PC has just been started and the waiting time (waitForFinished) of QProcess is not respected.
+    //To try converting the document one more time.
+    bool FirstLoading = true;
 
     void run() override
     {
@@ -40,8 +43,8 @@ public:
         QProcess process;
 
 
-        process.setProgram("setsid");
-        process.setArguments( QStringList() << "bash" << "-c" << QString::fromStdString(command) );
+        process.setProgram(QStringLiteral("setsid"));
+        process.setArguments( QStringList() << QStringLiteral("bash") << QStringLiteral("-c") << QString::fromStdString(command) );
         process.start();
         process.waitForStarted();
         mainClass->currentProcessPid = process.processId();
@@ -53,11 +56,18 @@ public:
         if ( threadId != mainClass->activeThreadId || mainClass->isActiveViewer == false){
             return;
         }
-
         if (exitStatus){
             //all Ok
         }
         else{
+            if (FirstLoading){
+                // It is used to mitigate a problem/bug that occurs when the PC has just been started and the waiting time (waitForFinished) of QProcess is not respected.
+                //To try converting the document one more time.
+                FirstLoading = false;
+                qDebug() << QStringLiteral("retry FirstLoading");
+                convertDocument(path,tempDir);
+                return;
+            }
             //timeout
             mainClass->loadingArrested(1);
             qDebug() << "error:file took to long to load";
@@ -132,7 +142,7 @@ DocumentViewer::DocumentViewer(QObject *parent)
 void DocumentViewer::loadFile(std::string filePath, std::string extension)
 {
     closeActiveConversionProcess();
-    setViewerDocument("");
+    setViewerDocument(QStringLiteral(""));
     showLoadingScreen();
     //saves the path of the current file in case it needs to be reloaded
     currentFilePath = filePath;
@@ -199,8 +209,8 @@ void DocumentViewer::stopViewer()
 void DocumentViewer::showLoadingScreen()
 {
     setMessagePageVisible(true);
-    setMessageHeaderText("");
-    setMessageDescriptionText("");
+    setMessageHeaderText(QStringLiteral(""));
+    setMessageDescriptionText(QStringLiteral(""));
     setLoadingBarVisible(true);
     setReloadButtonVisible(false);
     setHelpPageLinkVisible(false);
@@ -226,8 +236,9 @@ void DocumentViewer::closeActiveConversionProcess(){
         //runs a command outside the sandbox to find the pid and kill it.
         std::string command = R"(kill $( ps -aux | grep -F "/libreoffice/program/soffice.bin --headless --nolockcheck --norestore --convert-to pdf" | grep -F " --outdir /tmp"| awk '{ print $2 }'))";
         QProcess process;
-        process.setProgram("flatpak-spawn");
-        process.setArguments( QStringList() << "--host" << "bash" << "-c" << command.c_str() );
+        process.setProgram(QStringLiteral("flatpak-spawn"));
+        process.setArguments( QStringList() << QStringLiteral("--host") << QStringLiteral("bash") << QStringLiteral("-c") << QString().fromStdString(command.c_str()));
+
         process.start();
         process.waitForFinished();
 //        qDebug() << process.readAll();
@@ -249,7 +260,7 @@ std::string DocumentViewer::getLibreofficeCommand(){
     else if (! system("which flatpak > /dev/null 2>&1")){
         //check if libreoffice is installed with flatpak
         QProcess process;
-        process.start("bash", QStringList() << "-c" << "flatpak list | grep -i libreoffice");
+        process.start(QStringLiteral("bash"), QStringList() << QStringLiteral("-c") << QStringLiteral("flatpak list | grep -i libreoffice"));
         process.waitForFinished();
         if (process.exitCode() == 0){
             command = "flatpak run org.libreoffice.LibreOffice";
@@ -264,7 +275,7 @@ std::string DocumentViewer::getLibreofficeCommand(){
     else if (! system("[ -e '/run/host/usr/bin/flatpak' ]")){
         //check if libreoffice is installed with flatpak
         QProcess process;
-        process.start("bash", QStringList() << "-c" << "flatpak-spawn --host flatpak list | grep -i libreoffice");
+        process.start(QStringLiteral("bash"), QStringList() << QStringLiteral("-c") << QStringLiteral("flatpak-spawn --host flatpak list | grep -i libreoffice"));
         process.waitForFinished();
         qDebug() << process.readAllStandardError();
         if (process.exitCode() == 0){
@@ -291,6 +302,7 @@ void DocumentViewer::loadingArrested(int errorCode,QString customError){
 
     if (errorCode == 1){
         setMessageDescriptionText(i18n("The document took too long to load."));
+        setReloadButtonVisible(true);
     }
     else if (errorCode == 2){
         //general message and reload option
@@ -310,7 +322,7 @@ void DocumentViewer::loadingArrested(int errorCode,QString customError){
     else if (errorCode == 999){
         //libre error/general error: source could not be loaded
         setHelpPageLinkVisible(true);
-        setMessageDescriptionText(customError + QString(":"));
+        setMessageDescriptionText(customError + QStringLiteral(":"));
     }
 }
 
@@ -329,7 +341,7 @@ void DocumentViewer::setViewerDocument(const QString &newViewerDocument)
     if (m_viewerDocument == newViewerDocument)
         return;
     m_viewerDocument = newViewerDocument;
-    emit viewerDocumentChanged();
+    Q_EMIT viewerDocumentChanged();
 }
 
 
@@ -343,7 +355,7 @@ void DocumentViewer::setMessageHeaderText(const QString &newMessageHeaderText)
     if (m_messageHeaderText == newMessageHeaderText)
         return;
     m_messageHeaderText = newMessageHeaderText;
-    emit messageHeaderTextChanged();
+    Q_EMIT messageHeaderTextChanged();
 }
 
 bool DocumentViewer::messagePageVisible() const
@@ -356,7 +368,7 @@ void DocumentViewer::setMessagePageVisible(bool newMessagePageVisible)
     if (m_messagePageVisible == newMessagePageVisible)
         return;
     m_messagePageVisible = newMessagePageVisible;
-    emit messagePageVisibleChanged();
+    Q_EMIT messagePageVisibleChanged();
 }
 
 QString DocumentViewer::messageDescriptionText() const
@@ -369,7 +381,7 @@ void DocumentViewer::setMessageDescriptionText(const QString &newMessageDescript
     if (m_messageDescriptionText == newMessageDescriptionText)
         return;
     m_messageDescriptionText = newMessageDescriptionText;
-    emit messageDescriptionTextChanged();
+    Q_EMIT messageDescriptionTextChanged();
 }
 
 bool DocumentViewer::reloadButtonVisible() const
@@ -382,7 +394,7 @@ void DocumentViewer::setReloadButtonVisible(bool newReloadButtonVisible)
     if (m_reloadButtonVisible == newReloadButtonVisible)
         return;
     m_reloadButtonVisible = newReloadButtonVisible;
-    emit reloadButtonVisibleChanged();
+    Q_EMIT reloadButtonVisibleChanged();
 }
 
 bool DocumentViewer::loadingBarVisible() const
@@ -395,7 +407,7 @@ void DocumentViewer::setLoadingBarVisible(bool newLoadingBarVisible)
     if (m_loadingBarVisible == newLoadingBarVisible)
         return;
     m_loadingBarVisible = newLoadingBarVisible;
-    emit loadingBarVisibleChanged();
+    Q_EMIT loadingBarVisibleChanged();
 }
 
 
@@ -409,5 +421,5 @@ void DocumentViewer::setHelpPageLinkVisible(bool newHelpPageLinkVisible)
     if (m_helpPageLinkVisible == newHelpPageLinkVisible)
         return;
     m_helpPageLinkVisible = newHelpPageLinkVisible;
-    emit helpPageLinkVisibleChanged();
+    Q_EMIT helpPageLinkVisibleChanged();
 }

@@ -24,13 +24,13 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
 {
 
     //used for testing
-//std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-//    if (true){
-//        std::string path = "/home/nyre";
-//        //        std::string path = "/home/nyre";
-//        Manager->setFiles(path,false);
-//        return;
-//    }
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    //    if (true){
+    //        std::string path = "/home/nyre/Scrivania/example/qt6";
+    //        //        std::string path = "/home/nyre";
+    //        Manager->setFiles(path,false);
+    //        return;
+    //    }
     //used for testing
 
 
@@ -54,17 +54,35 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
     originalClipboardContent = std::get<0>(r);
     errorGetClipboardContent = std::get<1>(r);
 
-    if ( errorGetClipboardContent != ""){
+    if ( errorGetClipboardContent != QStringLiteral("")){
         //print error
         qDebug() << errorGetClipboardContent;
         Manager->setDolphinBridgeErrorMessage(errorGetClipboardContent);
         return;
     }
 
-    //sets the contents of the clipboard to " " in order to clean it from other possible paths copied by the user.
-    QString errorSetClipboardContent =  setClipboardContent(bus," ");
+    //search for the active dolphin window from which to take the file path.
+    const auto[activeDolphinWindow, errorGetActiveDolphinInstance] =  getActiveDolphinWindow(bus,argv,argc);
 
-    if ( errorSetClipboardContent != ""){
+    if ( errorGetActiveDolphinInstance != QStringLiteral("")){
+        //print error
+        qDebug() << errorGetActiveDolphinInstance;
+        Manager->setDolphinBridgeErrorMessage(errorGetActiveDolphinInstance);
+        //closes the program if the second argument indicates that kview was started with the shortcut.
+        if (argc > 1){
+            std::string firstParamenter = argv[1];
+            if (!firstParamenter.compare("-shortcut") ){
+                exit(1);
+            }
+        }
+
+        return;
+    }
+
+    //sets the contents of the clipboard to " " in order to clean it from other possible paths copied by the user.
+    QString errorSetClipboardContent =  setClipboardContent(bus,QStringLiteral(" "));
+
+    if ( errorSetClipboardContent != QStringLiteral("")){
         //print error
         qDebug() << errorSetClipboardContent;
         Manager->setDolphinBridgeErrorMessage(errorSetClipboardContent);
@@ -72,20 +90,10 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
     }
 
 
-    //search for the active dolphin window from which to take the file path.
-    const auto[activeDolphinWindow, errorGetActiveDolphinInstance] =  getActiveDolphinWindow(bus,argv,argc);
-
-    if ( errorGetActiveDolphinInstance != ""){
-        //print error
-        qDebug() << errorGetActiveDolphinInstance;
-        Manager->setDolphinBridgeErrorMessage(errorGetActiveDolphinInstance);
-
-        return;
-    }
-
     //sends the signal to copy the file location to the clipboard.
     QString copyError = sendCopyFileLocationSignal(bus,activeDolphinWindow);
-    if ( copyError != ""){
+
+    if ( copyError != QStringLiteral("")){
         //print error
         qDebug() << copyError;
         Manager->setDolphinBridgeErrorMessage(copyError);
@@ -107,7 +115,7 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
         //if the path does not exist.
         //send the signal select all and try copying the path to the clipboard again.
         QString selectAllError = sendSelectAllSignal(bus,activeDolphinWindow);
-        if ( selectAllError != ""){
+        if ( selectAllError != QStringLiteral("")){
             //print error
             qDebug() << selectAllError;
             Manager->setDolphinBridgeErrorMessage(selectAllError);
@@ -115,6 +123,8 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
         }
 
         sendCopyFileLocationSignal(bus,activeDolphinWindow);
+        // sendCopyFileLocationSignal(bus," ");
+
         //to deselect selected files (aesthetic)
         sendInvertSectionSignal(bus,activeDolphinWindow);
 
@@ -145,8 +155,8 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
 
 std::tuple<QString,QString> DolphinBridge::getClipboardContent(QDBusConnection bus)
 {
-    QDBusInterface dbus_iface("org.kde.klipper", "/klipper","org.kde.klipper.klipper", bus);
-    auto result = dbus_iface.call("getClipboardContents");
+    QDBusInterface dbus_iface(QStringLiteral("org.kde.klipper"), QStringLiteral("/klipper"),QStringLiteral("org.kde.klipper.klipper"), bus);
+    auto result = dbus_iface.call(QStringLiteral("getClipboardContents"));
     QString content = result.arguments().at(0).toString();
     QString error = result.errorMessage();
     return std::make_tuple(content,error);
@@ -155,33 +165,38 @@ std::tuple<QString,QString> DolphinBridge::getClipboardContent(QDBusConnection b
 
 QString DolphinBridge::setClipboardContent(QDBusConnection bus,QString content)
 {
-    QDBusInterface dbus_iface("org.kde.klipper", "/klipper","org.kde.klipper.klipper", bus);
-    auto result = dbus_iface.call("setClipboardContents",content);
+    QDBusInterface dbus_iface(QStringLiteral("org.kde.klipper"), QStringLiteral("/klipper"),QStringLiteral("org.kde.klipper.klipper"), bus);
+    auto result = dbus_iface.call(QStringLiteral("setClipboardContents"),content);
     QString error = result.errorMessage();
     return error;
 }
 
 QString DolphinBridge::sendCopyFileLocationSignal(QDBusConnection bus,QString dolphinWindow)
 {
-    QDBusInterface dbus_iface(dolphinWindow, "/dolphin/Dolphin_1/actions/copy_location","org.qtproject.Qt.QAction", bus);
-    auto result = dbus_iface.call("trigger");
+    //on Plasma 6 the copy of the file path must be re-enabled if more than one file is selected.
+    QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
+    dbus_iface.call(QStringLiteral("resetEnabled"));
+    //copy the path
+    QDBusInterface dbus_iface2(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
+    auto result = dbus_iface2.call(QStringLiteral("trigger"));
     QString error = result.errorMessage();
     return error;
+
 }
 
 QString DolphinBridge::sendSelectAllSignal(QDBusConnection bus, QString dolphinWindow)
 {
-    QDBusInterface dbus_iface(dolphinWindow, "/dolphin/Dolphin_1/actions/edit_select_all","org.qtproject.Qt.QAction", bus);
+    QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/edit_select_all"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    auto result = dbus_iface.call("trigger");
+    auto result = dbus_iface.call(QStringLiteral("trigger"));
     QString error = result.errorMessage();
     return error;
 }
 
 QString DolphinBridge::sendInvertSectionSignal(QDBusConnection bus, QString dolphinWindow)
 {
-    QDBusInterface dbus_iface(dolphinWindow, "/dolphin/Dolphin_1/actions/invert_selection","org.qtproject.Qt.QAction", bus);
-    auto result = dbus_iface.call("trigger");
+    QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/invert_selection"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
+    auto result = dbus_iface.call(QStringLiteral("trigger"));
     QString error = result.errorMessage();
     return error;
 }
@@ -196,9 +211,10 @@ std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnectio
     QDBusReply<QStringList> reply = bus.interface()->registeredServiceNames();
     const QStringList values = reply.value();
     for (const QString &name : values){
-        if (name.contains("dolphin")){
-            QDBusInterface dbus_iface(name, "/dolphin/Dolphin_1","org.freedesktop.DBus.Properties", bus);
-            auto result = dbus_iface.call("Get","org.qtproject.Qt.QWidget","isActiveWindow");
+        if (name.contains(QStringLiteral("dolphin"))){
+            QDBusInterface dbus_iface(name, QStringLiteral("/dolphin/Dolphin_1"),QStringLiteral("org.freedesktop.DBus.Properties"), bus);
+
+            auto result = dbus_iface.call(QStringLiteral("Get"),QStringLiteral("org.qtproject.Qt.QWidget"),QStringLiteral("isActiveWindow"));
             auto qVar =  result.arguments().at(0);
             bool isActive = qVar.value<QDBusVariant>().variant().toBool();
             if (isActive){
@@ -212,16 +228,6 @@ std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnectio
     if (activeWindow.isEmpty()){
         qDebug() << "No active dolphin window found";
         errorMessage = i18n("No active dolphin window found");
-
-        //closes the program if the second argument indicates that kview was started with the shortcut.
-        if (argc > 1){
-            std::string firstParamenter = argv[1];
-            if (!firstParamenter.compare("-s") ){
-                exit(1);
-            }
-        }
-
-
     }
 
 

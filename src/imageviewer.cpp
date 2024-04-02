@@ -8,7 +8,7 @@
 #include <signal.h>
 #include <klocalizedstring.h>
 std::vector<std::string> archiveExtensions{".kra"};
-
+using std::string;
 
 
 
@@ -44,8 +44,8 @@ public:
         std::string command = "unzip -o '" + path + "' mergedimage.png -d " + tempDir;
         QProcess process;
         //setsid is used to also kill the children of the subprocess.
-        process.setProgram("setsid");
-        process.setArguments( QStringList() << "bash" << "-c" <<  QString::fromStdString(command) );
+        process.setProgram(QStringLiteral("setsid"));
+        process.setArguments( QStringList() << QStringLiteral("bash") << QStringLiteral("-c") <<  QString::fromStdString(command) );
         process.start();
         process.waitForStarted();
         mainClass->currentProcessPid = process.processId();
@@ -101,8 +101,8 @@ ImageViewer::ImageViewer(QObject *parent)
 void ImageViewer::loadFile(std::string filePath, std::string extension)
 {
     closeActiveSubProcess();
-    setErrorMessageText(QString(""));
-    setViewerImage("");
+    setErrorMessageText(QStringLiteral(""));
+    setViewerImage(QStringLiteral(""));
     //it is used to discard the thread if not longer needed
     isActiveViewer = true;
     //the id is used to discard the thread if not longer needed
@@ -152,7 +152,7 @@ void ImageViewer::setViewerImage(const QString &newViewerImage)
     if (m_viewerImage == newViewerImage)
         return;
     m_viewerImage = newViewerImage;
-    emit viewerImageChanged();
+    Q_EMIT viewerImageChanged();
 }
 
 void ImageViewer::stopViewer()
@@ -181,5 +181,5 @@ void ImageViewer::setErrorMessageText(const QString &newErrorMessageText)
     if (m_errorMessageText == newErrorMessageText)
         return;
     m_errorMessageText = newErrorMessageText;
-    emit errorMessageTextChanged();
+    Q_EMIT errorMessageTextChanged();
 }

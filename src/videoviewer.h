@@ -17,7 +17,7 @@ public:
     QString viewerText() const;
     void setViewerMedia(const QString &newViewerMedia);
 
-signals:
+Q_SIGNALS:
 
     void viewerMediaChanged();
 private:

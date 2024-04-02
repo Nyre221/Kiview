@@ -25,5 +25,5 @@ void VideoViewer::setViewerMedia(const QString &newViewerMedia)
     if (m_viewerMedia == newViewerMedia)
         return;
     m_viewerMedia = newViewerMedia;
-    emit viewerMediaChanged();
+    Q_EMIT viewerMediaChanged();
 }

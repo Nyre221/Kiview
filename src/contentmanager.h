@@ -65,7 +65,7 @@ public:
     QString dolphinBridgeErrorMessage() const;
     void setDolphinBridgeErrorMessage(const QString &newDolphinBridgeErrorMessage);
 
-signals:
+Q_SIGNALS:
     void currentViewerChanged();
 
     void fileNameChanged();

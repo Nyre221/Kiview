@@ -22,7 +22,7 @@ private:
     QString sendSelectAllSignal(QDBusConnection bus, QString dolphinWindow);
     QString sendInvertSectionSignal(QDBusConnection bus, QString dolphinWindow);
 
-signals:
+Q_SIGNALS:
 
 };
 

@@ -4,7 +4,6 @@
 #define DOCUMENTVIEWER_H
 #include <QProcess>
 #include <QObject>
-
 class DocumentViewer : public QObject
 {
     Q_OBJECT
@@ -29,9 +28,8 @@ public:
     int currentProcessPid;
     bool processIsRunning = false;
 
-
     std::string currentFilePath;
-    void loadingArrested(int errorCode, QString customError = "");
+    void loadingArrested(int errorCode, QString customError = QStringLiteral(""));
     void closeActiveConversionProcess();
     void stopViewer();
     Q_INVOKABLE void reloadDocument();
@@ -61,7 +59,7 @@ public:
     bool helpPageLinkVisible() const;
     void setHelpPageLinkVisible(bool newHelpPageLinkVisible);
 
-signals:
+Q_SIGNALS:
 
     void viewerDocumentChanged();
     void messageHeaderTextChanged();

@@ -29,7 +29,7 @@ public:
     QString errorMessageText() const;
     void setErrorMessageText(const QString &newErrorMessageText);
 
-signals:
+Q_SIGNALS:
 
     void viewerImageChanged();
 

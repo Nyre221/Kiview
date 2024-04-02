@@ -43,5 +43,5 @@ void TextViewer::setViewerText(const QString &newViewerText)
     if (m_viewerText == newViewerText)
         return;
     m_viewerText = newViewerText;
-    emit viewerTextChanged();
+    Q_EMIT viewerTextChanged();
 }

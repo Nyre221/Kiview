@@ -10,14 +10,15 @@
 #include <dolphinbridge.h>
 #include <QIcon>
 #include <iostream>
-
+#include <QtWebEngineQuick>
 
 
 int main(int argc, char *argv[])
 {
-
-
+    QtWebEngineQuick::initialize();
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+
     QApplication app(argc, argv);
 
     KLocalizedString::setApplicationDomain("kiview");
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&app, SIGNAL(aboutToQuit()), &Manager, SLOT(closing()));
     //sets the icon of the app
-    app.setWindowIcon(QIcon::fromTheme("com.nyre.kiview"));
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("com.nyre.kiview")));
 
 
     return app.exec();
