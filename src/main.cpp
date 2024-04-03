@@ -16,7 +16,6 @@
 int main(int argc, char *argv[])
 {
     QtWebEngineQuick::initialize();
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 
     QApplication app(argc, argv);
