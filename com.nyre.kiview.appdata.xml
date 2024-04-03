@@ -9,7 +9,7 @@
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0</project_license>
   <name>Kiview</name>
-  <summary>Quick preview of various file types.</summary>
+  <summary>Quick preview of files and folder in Dolphin</summary>
   <description>
   <p>Kiview gives the user the ability to quickly preview different file types without the need to launch the default application.</p>
   <p>Known Issues:</p>
