@@ -188,8 +188,8 @@ QString DolphinBridge::sendCopyFileLocationSignal(QDBusConnection bus,QString do
 QString DolphinBridge::sendSelectAllSignal(QDBusConnection bus, QString dolphinWindow)
 {
     QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/edit_select_all"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     auto result = dbus_iface.call(QStringLiteral("trigger"));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     QString error = result.errorMessage();
     return error;
 }
