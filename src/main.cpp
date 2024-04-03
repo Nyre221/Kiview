@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     KLocalizedString::setApplicationDomain("kiview");
     QCoreApplication::setOrganizationName(QStringLiteral("nyre"));
     QCoreApplication::setOrganizationDomain(QStringLiteral("nyre.com"));
-    QCoreApplication::setApplicationName(QStringLiteral("KiView"));
+    QCoreApplication::setApplicationName(QStringLiteral("Kiview"));
 
 
 
