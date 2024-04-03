@@ -71,7 +71,7 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
         //closes the program if the second argument indicates that kview was started with the shortcut.
         if (argc > 1){
             std::string firstParamenter = argv[1];
-            if (!firstParamenter.compare("-shortcut") ){
+            if (!firstParamenter.compare("--shortcut") ){
                 exit(1);
             }
         }
@@ -134,6 +134,7 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
         //check one last time if the path is valid.
         if (! (std::filesystem::exists(filePath.toStdString()))){
             qDebug() << "invalid path";
+            qDebug() << "path: " + filePath.toStdString();
             Manager->setDolphinBridgeErrorMessage(i18n("Error: Invalid Path"));
             return;
         }
