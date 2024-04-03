@@ -11,7 +11,7 @@ To use it you need to set a keyboard shortcut via plasma settings and invoke it 
 Any key combination is fine to activate the shortcut and it is only necessary to enter this command in the appropriate section: `kiview --shortcut`.
 
 #### Example:
-![Screenshot-30-11-2023-CET-11](https://github.com/Nyre221/Kiview/assets/104171042/2d5cc6c8-a217-40e9-b2a8-f6e28ed9c99a)
+![Schermata_20240403_172653](https://github.com/Nyre221/Kiview/assets/104171042/14ed7534-f2cc-4c92-85da-6ce7b1ccfd73)
 
 ![Screenshot-30-11-2023-CET-9](https://github.com/Nyre221/Kiview/assets/104171042/4e06a068-3d51-4b57-adcf-f42693b92e18)
 
