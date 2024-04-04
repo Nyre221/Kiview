@@ -110,33 +110,51 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
         //if path exist
         fileWasSelected = true;
     }
+
     // if there is no valid path in the clipboard, it means that no file was selected.
     else if (! (std::filesystem::exists(filePath.toStdString()))) {
-        //if the path does not exist.
-        //send the signal select all and try copying the path to the clipboard again.
-        QString selectAllError = sendSelectAllSignal(bus,activeDolphinWindow);
-        if ( selectAllError != QStringLiteral("")){
-            //print error
-            qDebug() << selectAllError;
-            Manager->setDolphinBridgeErrorMessage(selectAllError);
-            return;
-        }
+        //makes X attempts to obtain the path.
+        //This is to give slow PCs more opportunity to get the path.
+        int times = 5;
+        for (int i = 0; i < times; i++) {
+            qDebug() << QStringLiteral("attempt:") + QString::number(i+1);
+            //if the path does not exist.
+            //send the signal select all and try copying the path to the clipboard again.
+            QString selectAllError = sendSelectAllSignal(bus,activeDolphinWindow);
+            if ( selectAllError != QStringLiteral("")){
+                //print error
+                qDebug() << selectAllError;
+                Manager->setDolphinBridgeErrorMessage(selectAllError);
+                //restore clipboard contents.
+                setClipboardContent(bus,originalClipboardContent);
+                return;
+            }
+            //copy the path
+            sendCopyFileLocationSignal(bus,activeDolphinWindow);
 
-        sendCopyFileLocationSignal(bus,activeDolphinWindow);
-        // sendCopyFileLocationSignal(bus," ");
+            //to deselect selected files
+            sendInvertSectionSignal(bus,activeDolphinWindow);
 
-        //to deselect selected files (aesthetic)
-        sendInvertSectionSignal(bus,activeDolphinWindow);
+            //get the path
+            auto r3 = getClipboardContent(bus);
+            filePath = std::get<0>(r3);
+            errorGetClipboardContent = std::get<1>(r3);
 
-        auto r3 = getClipboardContent(bus);
-        filePath = std::get<0>(r3);
-        errorGetClipboardContent = std::get<1>(r3);
-        //check one last time if the path is valid.
-        if (! (std::filesystem::exists(filePath.toStdString()))){
-            qDebug() << "invalid path";
-            qDebug() << "path: " + filePath.toStdString();
-            Manager->setDolphinBridgeErrorMessage(i18n("Error: Invalid Path"));
-            return;
+            //check if the path is valid.
+            if ((std::filesystem::exists(filePath.toStdString()))){
+                break;
+            }
+            else if (i == times-1) {
+                qDebug() << "invalid path";
+                qDebug() << "path: " + filePath.toStdString();
+                //restore clipboard contents.
+                setClipboardContent(bus,originalClipboardContent);
+                Manager->setDolphinBridgeErrorMessage(i18n("Error: Invalid Path"));
+                return;
+            }
+            // increases the delay between functions for the next attempt
+            // This is to give slow PCs more opportunity to get the path.
+            waitingTime = waitingTime * 3;
         }
 
         //gets the parent folder.
@@ -177,7 +195,8 @@ QString DolphinBridge::sendCopyFileLocationSignal(QDBusConnection bus,QString do
     //on Plasma 6 the copy of the file path must be re-enabled if more than one file is selected.
     QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     dbus_iface.call(QStringLiteral("resetEnabled"));
-    std::this_thread::sleep_for(std::chrono::milliseconds(150));
+    //This is to give slow PCs more opportunity to get the path.
+    std::this_thread::sleep_for(std::chrono::milliseconds(waitingTime));
     //copy the path
     QDBusInterface dbus_iface2(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     auto result = dbus_iface2.call(QStringLiteral("trigger"));
@@ -190,7 +209,8 @@ QString DolphinBridge::sendSelectAllSignal(QDBusConnection bus, QString dolphinW
 {
     QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/edit_select_all"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     auto result = dbus_iface.call(QStringLiteral("trigger"));
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    //This is to give slow PCs more opportunity to get the path.
+    std::this_thread::sleep_for(std::chrono::milliseconds(waitingTime));
     QString error = result.errorMessage();
     return error;
 }

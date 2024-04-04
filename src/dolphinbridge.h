@@ -12,6 +12,7 @@ class DolphinBridge : public QObject
 public:
     explicit DolphinBridge(QObject *parent = nullptr);
     void start(ContentManager* Manager, char *argv[], int argc);
+    int waitingTime = 25;
 
 
 private:
