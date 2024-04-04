@@ -177,6 +177,7 @@ QString DolphinBridge::sendCopyFileLocationSignal(QDBusConnection bus,QString do
     //on Plasma 6 the copy of the file path must be re-enabled if more than one file is selected.
     QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     dbus_iface.call(QStringLiteral("resetEnabled"));
+    std::this_thread::sleep_for(std::chrono::milliseconds(150));
     //copy the path
     QDBusInterface dbus_iface2(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     auto result = dbus_iface2.call(QStringLiteral("trigger"));
