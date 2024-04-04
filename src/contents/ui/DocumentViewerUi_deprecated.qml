@@ -13,7 +13,7 @@ Item{
     //these actions are read by viewersLoader and are shown in the "header bar" of the application.
     actions: [OpenAppButton{}]
     property string htmlLink
-    htmlLink: "<a href='https://github.com/Nyre221/Kiview/tree/main/extraStuff/Libreoffice%20troubleshooting'>" + i18n("Look Here!") +"</a>"
+    htmlLink: "<a href='https://github.com/Nyre221/Kiview/tree/master/extraStuff/Libreoffice%20troubleshooting'>" + i18n("Look Here!") +"</a>"
 
 
 
