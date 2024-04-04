@@ -1,0 +1,7 @@
+
+flatpak install io.qt.qtwebengine.BaseApp/x86_64/6.6
+flatpak install org.kde.Sdk/x86_64/6.6
+git clone https://github.com/Nyre221/Kiview.git
+cd ./Kiview
+flatpak-builder --user --install --force-clean  build-dir ./.com.nyre.kiview.json
+flatpak run com.nyre.kview
