@@ -42,14 +42,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(src)
 add_subdirectory(icons)
 
-
-
-install(PROGRAMS com.nyre.kiview.desktop DESTINATION ${KDE_INSTALL_APPDIR})
-install(FILES com.nyre.kiview.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-
-
-
-
 ki18n_install(po)
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
