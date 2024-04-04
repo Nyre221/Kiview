@@ -44,7 +44,7 @@ Kirigami.ApplicationWindow {
 
     pageStack.initialPage: Kirigami.Page{
     id:kiriPage
-    padding: 6
+    padding: 0
     title: Manager.fileName
     actions: viewersLoader.actions
 
