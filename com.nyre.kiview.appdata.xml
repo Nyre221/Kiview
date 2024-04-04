@@ -30,11 +30,15 @@
     <binary>kiview</binary>
   </provides>
   <project_group>nyre</project_group>
+  <launchable type="desktop-id">com.nyre.kiview.desktop</launchable>
+  <content_rating type="oars-1.1"/>
+  <provides>
+    <binary>kiview</binary>
+  </provides>
+  <releases>
+    <release version="0.8" date="2024-04-04" />
+  </releases>
+  <developer id="com.nyre">
+    <name>Nyre</name>
+  </developer>
 </component>
-
-
-
-
-
-
-<!-- https://community.kde.org/Guidelines_and_HOWTOs/AppStream -->
