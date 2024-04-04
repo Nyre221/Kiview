@@ -1,0 +1,22 @@
+[Desktop Entry]
+Categories=Qt;KDE;Utility;
+Comment[it_IT]=Anteprima rapida dei file in dolphin.
+Comment=Quick file preview for dolphin.
+Comment[en_US]=Quick file preview for dolphin.
+Exec=kiview
+GenericName[it_IT]=
+GenericName=
+GenericName[en_US]=
+Icon=com.nyre.kiview
+MimeType=video/webm;video/mp4;text/plain;text/csv;image/svg+xml-compressed;image/svg+xml;image/png;image/jpeg;audio/mpeg;application/zip;application/x-xz-compressed-tar;application/x-shellscript;application/x-krita;application/x-compressed-tar;application/vnd.rar;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.presentationml.presentation;application/vnd.oasis.opendocument.text;application/vnd.oasis.opendocument.spreadsheet;application/vnd.oasis.opendocument.presentation;application/vnd.ms-powerpoint;application/vnd.ms-excel;application/pdf;application/msword;
+Name[it_IT]=Kiview
+Name=Kiview
+Name[en_US]=Kiview
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+Version=1.0
+X-KDE-SubstituteUID=false
+X-KDE-Username=
