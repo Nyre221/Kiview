@@ -7,7 +7,7 @@ Kiview gives the user the ability to quickly preview different file types withou
 Currently due to the way it integrates with dolphin, the last item copied to the clipboard is modified and then restored. This isn't a problem if it's just text, but unfortunately it can't restore the contents if the last item copied was a folder or file.
 
 ## Installation
-### Kde Neon (manual update required)
+### Kde Neon (manual update)
 `wget -O kiview.deb  $(curl -s https://api.github.com/repos/Nyre221/Kiview/releases/latest | grep browser_download_url | cut -d '"' -f 4)`  
 `sudo dpkg -i ./kiview.deb`  
 `rm ./kiview.deb`
