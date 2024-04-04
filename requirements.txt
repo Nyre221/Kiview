@@ -1,9 +1,9 @@
 
 Kde Neon ( Ubuntu 22.04 Plasma 6)
-sudo apt install build-essential cmake extra-cmake-modules kirigami2-dev gettext qt6-declarative-dev qt6-base-dev  libkf6i18n-dev libkf6coreaddons-dev qml-module-org-kde-qqc2desktopstyle kf6-kirigami-dev qt6-webengine-dev
+sudo apt install build-essential cmake extra-cmake-modules gettext qt6-declarative-dev qt6-base-dev  libkf6i18n-dev libkf6coreaddons-dev qml-module-org-kde-qqc2desktopstyle kf6-kirigami-dev qt6-webengine-dev
 
 
 
 OpenSuse Tumbleweed
 sudo zypper install --type pattern devel_C_C++
-sudo zypper install  cmake extra-cmake-modules kf6-extra-cmake-modules kirigami2-devel qt6-webengine kf6-kirigami-devel qt6-declarative-devel kf6-ki18n-devel  kf6-kcoreaddons-devel qqc2-desktop-style-devel qt6-quickcontrols2-devel qt6-core-devel qt6-webenginequick-devel
+sudo zypper install  cmake extra-cmake-modules kf6-extra-cmake-modules qt6-webengine kf6-kirigami-devel qt6-declarative-devel kf6-ki18n-devel  kf6-kcoreaddons-devel qqc2-desktop-style-devel qt6-quickcontrols2-devel qt6-core-devel qt6-webenginequick-devel
