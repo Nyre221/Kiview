@@ -6,13 +6,13 @@
         <file>contents/ui/TextViewerUi.qml</file>
         <file>contents/ui/ViewersLoader.qml</file>
         <file>contents/ui/DocumentViewerUi.qml</file>
-        <file>contents/ui/VideoViewerUi.qml</file>
+        <file>contents/ui/VideoViewerUi_alt.qml</file>
         <file>contents/ui/OpenAppButton.qml</file>
         <file>contents/ui/FallbackViewerUi.qml</file>
         <file>contents/ui/ContainerViewerUI.qml</file>
         <file>contents/ui/TestComponent.qml</file>
         <file>contents/ui/DocumentViewerUi_deprecated.qml</file>
-        <file>contents/ui/VideoViewerUi_original.qml</file>
+        <file>contents/ui/VideoViewerUi.qml</file>
         <file>contents/ui/InfoDialog.qml</file>
     </qresource>
 </RCC>
