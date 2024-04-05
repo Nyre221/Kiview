@@ -17,7 +17,7 @@ public:
 
 private:
     std::tuple<QString,QString> getClipboardContent(QDBusConnection bus);
-    std::tuple<QString,QString> getActiveDolphinWindow(QDBusConnection bus, char *argv[], int argc);
+    std::tuple<QString,QString> getActiveDolphinWindow(QDBusConnection bus);
     QString setClipboardContent(QDBusConnection bus, QString content);
     QString sendCopyFileLocationSignal(QDBusConnection bus, QString dolphinWindow);
     QString sendSelectAllSignal(QDBusConnection bus, QString dolphinWindow);

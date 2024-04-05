@@ -62,7 +62,7 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
     }
 
     //search for the active dolphin window from which to take the file path.
-    const auto[activeDolphinWindow, errorGetActiveDolphinInstance] =  getActiveDolphinWindow(bus,argv,argc);
+    const auto[activeDolphinWindow, errorGetActiveDolphinInstance] =  getActiveDolphinWindow(bus);
 
     if ( errorGetActiveDolphinInstance != QStringLiteral("")){
         //print error
@@ -230,7 +230,7 @@ QString DolphinBridge::sendInvertSectionSignal(QDBusConnection bus, QString dolp
 
 
 
-std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnection bus, char *argv[], int argc)
+std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnection bus)
 {
     QString activeWindow;
     QString errorMessage;
