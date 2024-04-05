@@ -2,7 +2,6 @@
    "base": "io.qt.qtwebengine.BaseApp",
    "base-version": "6.6",
    "command": "kiview",
-   "desktop-file-name-suffix": " (Beta)",
    "build-options": {
     "env": [
       "QTWEBENGINE_DISABLE_SANDBOX=1"
