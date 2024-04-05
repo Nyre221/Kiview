@@ -241,7 +241,7 @@ void DocumentViewer::closeActiveConversionProcess(){
 
         process.start();
         process.waitForFinished();
-//        qDebug() << process.readAll();
+       qDebug() << process.readAllStandardError();
 
         }
         processIsRunning = false;
