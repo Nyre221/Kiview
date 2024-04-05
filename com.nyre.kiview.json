@@ -17,7 +17,7 @@
       "--socket=pulseaudio",
       "--socket=session-bus",
       "--filesystem=host:ro",
-      "--filesystem=/tmp:ro",
+      "--filesystem=/tmp",
       "--talk-name=org.freedesktop.Flatpak",
       "--talk-name=org.kde.klipper",
       "--talk-name=org.freedesktop.DBus",
