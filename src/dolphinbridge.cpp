@@ -174,6 +174,7 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
 
 std::tuple<QString,QString> DolphinBridge::getClipboardContent(QDBusConnection bus)
 {
+    qDebug() << "Sending Get Clipboard Content Signal";
     QDBusInterface dbus_iface(QStringLiteral("org.kde.klipper"), QStringLiteral("/klipper"),QStringLiteral("org.kde.klipper.klipper"), bus);
     auto result = dbus_iface.call(QStringLiteral("getClipboardContents"));
     QString content = result.arguments().at(0).toString();
@@ -184,6 +185,7 @@ std::tuple<QString,QString> DolphinBridge::getClipboardContent(QDBusConnection b
 
 QString DolphinBridge::setClipboardContent(QDBusConnection bus,QString content)
 {
+    qDebug() << "Sending Set Clipboard Content Signal";
     QDBusInterface dbus_iface(QStringLiteral("org.kde.klipper"), QStringLiteral("/klipper"),QStringLiteral("org.kde.klipper.klipper"), bus);
     auto result = dbus_iface.call(QStringLiteral("setClipboardContents"),content);
     QString error = result.errorMessage();
@@ -192,6 +194,7 @@ QString DolphinBridge::setClipboardContent(QDBusConnection bus,QString content)
 
 QString DolphinBridge::sendCopyFileLocationSignal(QDBusConnection bus,QString dolphinWindow)
 {
+    qDebug() << "Sending Copy File Location Signal";
     //on Plasma 6 the copy of the file path must be re-enabled if more than one file is selected.
     QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     dbus_iface.call(QStringLiteral("resetEnabled"));
@@ -207,6 +210,7 @@ QString DolphinBridge::sendCopyFileLocationSignal(QDBusConnection bus,QString do
 
 QString DolphinBridge::sendSelectAllSignal(QDBusConnection bus, QString dolphinWindow)
 {
+    qDebug() << "Sending Select All Signal";
     QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/edit_select_all"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     auto result = dbus_iface.call(QStringLiteral("trigger"));
     //This is to give slow PCs more opportunity to get the path.
@@ -217,6 +221,7 @@ QString DolphinBridge::sendSelectAllSignal(QDBusConnection bus, QString dolphinW
 
 QString DolphinBridge::sendInvertSectionSignal(QDBusConnection bus, QString dolphinWindow)
 {
+    qDebug() << "Sending Invert Selection Signal";
     QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/invert_selection"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
     auto result = dbus_iface.call(QStringLiteral("trigger"));
     QString error = result.errorMessage();
@@ -229,13 +234,13 @@ std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnectio
 {
     QString activeWindow;
     QString errorMessage;
-
-    QDBusReply<QStringList> reply = bus.interface()->registeredServiceNames();
-    const QStringList values = reply.value();
+    qDebug() << "Getting Active Window...";
+    QDBusInterface dbus_iface2(QStringLiteral("org.freedesktop.DBus"), QStringLiteral("/org/freedesktop/DBus"),QStringLiteral("org.freedesktop.DBus"), bus);
+    const QStringList values =  dbus_iface2.call(QStringLiteral("ListNames")).arguments().at(0).toStringList();
+    // qDebug() << values;
     for (const QString &name : values){
         if (name.contains(QStringLiteral("dolphin"))){
             QDBusInterface dbus_iface(name, QStringLiteral("/dolphin/Dolphin_1"),QStringLiteral("org.freedesktop.DBus.Properties"), bus);
-
             auto result = dbus_iface.call(QStringLiteral("Get"),QStringLiteral("org.qtproject.Qt.QWidget"),QStringLiteral("isActiveWindow"));
             auto qVar =  result.arguments().at(0);
             bool isActive = qVar.value<QDBusVariant>().variant().toBool();
@@ -251,8 +256,6 @@ std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnectio
         qDebug() << "No active dolphin window found";
         errorMessage = i18n("No active dolphin window found");
     }
-
-
 
     return std::make_tuple(activeWindow,errorMessage);
 }
