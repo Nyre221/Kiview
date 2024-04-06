@@ -1,4 +1,8 @@
 {
+   "id": "io.github.nyre221.kiview",
+   "runtime": "org.kde.Platform",
+   "runtime-version": "6.6",
+   "sdk": "org.kde.Sdk",
    "base": "io.qt.qtwebengine.BaseApp",
    "base-version": "6.6",
    "command": "kiview",
@@ -20,11 +24,9 @@
       "--filesystem=/tmp",
       "--talk-name=org.freedesktop.Flatpak",
       "--talk-name=org.kde.klipper",
-      "--talk-name=org.freedesktop.DBus",
       "--talk-name=org.kde.dolphin"
    ],
    "cleanup-commands":[ "/app/cleanup-BaseApp.sh"],
-   "id": "io.github.nyre221.kiview",
    "modules": [
       {
          "buildsystem": "cmake-ninja",
@@ -38,8 +40,5 @@
          ]
       }
 
-   ],
-   "runtime": "org.kde.Platform",
-    "runtime-version": "6.6",
-   "sdk": "org.kde.Sdk"
+   ]
 }
