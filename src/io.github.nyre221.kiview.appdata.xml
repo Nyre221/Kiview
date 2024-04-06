@@ -43,7 +43,7 @@
     <binary>kiview</binary>
   </provides>
   <releases>
-    <release version="0.9" date="2024-04-05" />
+    <release version="1" date="2024-04-06" />
   </releases>
   <developer id="io.github.nyre221">
     <name>Nyre</name>
