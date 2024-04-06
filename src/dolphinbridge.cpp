@@ -129,6 +129,10 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
                 setClipboardContent(bus,originalClipboardContent);
                 return;
             }
+
+            //on Plasma 6 the copy of the file path must be re-enabled if more than one file is selected.
+            QDBusInterface dbus_iface(activeDolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
+            dbus_iface.call(QStringLiteral("resetEnabled"));
             //copy the path
             sendCopyFileLocationSignal(bus,activeDolphinWindow);
 
@@ -195,9 +199,6 @@ QString DolphinBridge::setClipboardContent(QDBusConnection bus,QString content)
 QString DolphinBridge::sendCopyFileLocationSignal(QDBusConnection bus,QString dolphinWindow)
 {
     qDebug() << "Sending Copy File Location Signal";
-    //on Plasma 6 the copy of the file path must be re-enabled if more than one file is selected.
-    QDBusInterface dbus_iface(dolphinWindow, QStringLiteral("/dolphin/Dolphin_1/actions/copy_location"),QStringLiteral("org.qtproject.Qt.QAction"), bus);
-    dbus_iface.call(QStringLiteral("resetEnabled"));
     //This is to give slow PCs more opportunity to get the path.
     std::this_thread::sleep_for(std::chrono::milliseconds(waitingTime));
     //copy the path
