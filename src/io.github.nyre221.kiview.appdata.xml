@@ -5,7 +5,7 @@
  -->
 
 <component type="desktop-application">
-  <id>com.nyre.kiview</id>
+  <id>io.github.nyre221.kiview</id>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0</project_license>
   <name>Kiview</name>
@@ -28,7 +28,7 @@
   <url type="bugtracker">https://github.com/Nyre221/Kiview</url>
   <url type="homepage">https://github.com/Nyre221/Kiview</url>
   <url type="donation">https://www.paypal.com/donate/?hosted_button_id=J7QU55MMUP4G4</url>
-  <launchable type="desktop-id">com.nyre.kiview.desktop</launchable>
+  <launchable type="desktop-id">io.github.nyre221.kiview.desktop</launchable>
   <screenshots>
     <screenshot type="default">
      <image>https://i.imgur.com/YvzJIdg.png</image>
@@ -38,7 +38,6 @@
     <binary>kiview</binary>
   </provides>
   <project_group>nyre</project_group>
-  <launchable type="desktop-id">com.nyre.kiview.desktop</launchable>
   <content_rating type="oars-1.1"/>
   <provides>
     <binary>kiview</binary>
@@ -46,7 +45,7 @@
   <releases>
     <release version="0.9" date="2024-04-05" />
   </releases>
-  <developer id="com.nyre">
+  <developer id="io.github.nyre221">
     <name>Nyre</name>
   </developer>
 </component>

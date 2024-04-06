@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     KLocalizedString::setApplicationDomain("kiview");
     QCoreApplication::setOrganizationName(QStringLiteral("nyre"));
-    QCoreApplication::setOrganizationDomain(QStringLiteral("nyre.com"));
+    QCoreApplication::setOrganizationDomain(QStringLiteral("nyre221.github.io"));
     QCoreApplication::setApplicationName(QStringLiteral("Kiview"));
 
 
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&app, SIGNAL(aboutToQuit()), &Manager, SLOT(closing()));
     //sets the icon of the app
-    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("com.nyre.kiview")));
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("io.github.nyre221.kiview")));
 
 
     return app.exec();

@@ -29,6 +29,6 @@ target_link_libraries(kiview
 
 )
 
-install(PROGRAMS com.nyre.kiview.desktop DESTINATION ${KDE_INSTALL_APPDIR})
-install(FILES com.nyre.kiview.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+install(PROGRAMS io.github.nyre221.kiview.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(FILES io.github.nyre221.kiview.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 install(TARGETS kiview ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

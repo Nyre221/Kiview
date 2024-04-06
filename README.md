@@ -17,7 +17,7 @@ Currently due to the way it integrates with dolphin, the last item copied to the
 
 ## How it works
 To use it you need to set a keyboard shortcut via plasma settings and invoke it while a dolphin window is active.   
-Any key combination is fine to activate the shortcut and it is only necessary to enter this command in the appropriate section: `kiview --shortcut` or `flatpak run com.nyre.kiview --shortcut` (for the flatpak version).
+Any key combination is fine to activate the shortcut and it is only necessary to enter this command in the appropriate section: `kiview --shortcut` or `flatpak run io.github.nyre221.kiview --shortcut` (for the flatpak version).
 
 #### Example:
 ![Schermata_20240403_172653](https://github.com/Nyre221/Kiview/assets/104171042/14ed7534-f2cc-4c92-85da-6ce7b1ccfd73)

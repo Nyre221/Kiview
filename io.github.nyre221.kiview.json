@@ -24,7 +24,7 @@
       "--talk-name=org.kde.dolphin"
    ],
    "cleanup-commands":[ "/app/cleanup-BaseApp.sh"],
-   "id": "com.nyre.kiview",
+   "id": "io.github.nyre221.kiview",
    "modules": [
       {
          "buildsystem": "cmake-ninja",
