@@ -31,8 +31,9 @@
          "name": "kiview",
          "sources": [
             {
-               "type": "dir",
-               "path": "."
+               "type": "git",
+               "url": "https://github.com/Nyre221/Kiview.git",
+               "commit":"18b1c6d1cf9534bf55272928518f9e5e014270e6"
             }
          ]
       }
