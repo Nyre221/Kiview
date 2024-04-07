@@ -22,6 +22,7 @@ public:
     QString viewerDocument() const;
     void setViewerDocument(const QString &newViewerDocument);
     bool isInsideFlatpak = false;
+    bool runningFlatpak();
 
 
     int activeThreadId;

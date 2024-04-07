@@ -136,6 +136,15 @@ DocumentViewer::DocumentViewer(QObject *parent)
 {
     activeThreadId=0;
     libreofficeCommand = getLibreofficeCommand();
+    isInsideFlatpak = runningFlatpak();
+    //get temp dir path
+    if (isInsideFlatpak){
+        tempDir = "/var/tmp";
+    }
+    else{
+        tempDir = std::filesystem::temp_directory_path();
+    }
+
 }
 
 
@@ -179,9 +188,6 @@ void DocumentViewer::convertDocument(std::string path){
         return;
     }
 
-
-    //get temp dir path
-    tempDir = std::filesystem::temp_directory_path();
     //thread
     ConversionThread* t = new ConversionThread;
     t->libreofficeCommand = libreofficeCommand;
@@ -270,7 +276,6 @@ std::string DocumentViewer::getLibreofficeCommand(){
     else if ( ! system("[ -e '/run/host/usr/bin/libreoffice' ]")){
         // check if libreoffice is installed
         command = "flatpak-spawn --host libreoffice";
-        isInsideFlatpak = true;
     }
     else if (! system("[ -e '/run/host/usr/bin/flatpak' ]")){
         //check if libreoffice is installed with flatpak
@@ -279,7 +284,6 @@ std::string DocumentViewer::getLibreofficeCommand(){
         process.waitForFinished();
         qDebug() << process.readAllStandardError();
         if (process.exitCode() == 0){
-            isInsideFlatpak = true;
             command = "flatpak-spawn --host flatpak run org.libreoffice.LibreOffice";
         }
     }
@@ -342,6 +346,14 @@ void DocumentViewer::setViewerDocument(const QString &newViewerDocument)
         return;
     m_viewerDocument = newViewerDocument;
     Q_EMIT viewerDocumentChanged();
+}
+
+bool DocumentViewer::runningFlatpak()
+{
+    if (getenv("container")) {
+        return true;
+    }
+    return false;
 }
 
 
