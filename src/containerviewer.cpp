@@ -109,11 +109,6 @@ public:
 
         std::string exec;
         std::string command;
-        //avoids checking the existence of the command if inside flatpak(rar only).
-        //this is necessary because I can't include unrar inside flatpak, and therefore I use the system one.
-        //The presence of the command is checked separately from the other commands.
-        //it should have been done better.
-        bool checkCommand = true;
 
         //choose the command based on the archive type.
         if (extension  ==  ".zip"){
@@ -124,24 +119,13 @@ public:
             exec = "tar";
             command = "tar --list -f '" + path +"'";
         }
-        else if ( (extension  ==  ".rar") && (! system("[ -e '/run/host/usr/bin/unrar-nonfree' ]"))){
-            //inside flatpak
-            command = "flatpak-spawn --host unrar l  '" + path +"' " + R"(| grep  -Fv '..D..' | cut -d' ' -f13-100 | grep -v "Date    Time   Name" | grep -v "                  " | grep -vi "Alexander Roshal" | sed '/^$/d' | sed 's/^[ \t]*//')";
-            //disables checking for the presence of the executable.
-            checkCommand = false;
-            //if it is missing, it is used in the error message.
-            //Normally it is used to check if the command exists + error message.
-            exec = "unrar-nonfree";
-        }
         else if (extension  ==  ".rar"){
             exec = "unrar";
             command = "unrar l  '" + path +"' " + R"(| grep  -Fv '..D..' | cut -d' ' -f13-100 | grep -v "Date    Time   Name" | grep -v "                  " | grep -vi "Alexander Roshal" | sed '/^$/d' | sed 's/^[ \t]*//')";
         }
 
-
-
         //checks if the executable exists.
-        if (checkCommand == true && (! checkExecutable(exec))){
+        if (! checkExecutable(exec)){
             //exec not found
             qDebug() << QString().fromStdString(exec +" package not installed");
             //set error message
@@ -166,7 +150,6 @@ public:
             //content no longer needed, exiting...
             return;
         }
-
 
         if (! exitStatus){
             //failed
