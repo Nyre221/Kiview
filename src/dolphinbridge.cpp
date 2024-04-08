@@ -236,8 +236,8 @@ std::tuple<QString,QString> DolphinBridge::getActiveDolphinWindow(QDBusConnectio
     QString activeWindow;
     QString errorMessage;
     qDebug() << "Getting Active Window...";
-    QDBusInterface dbus_iface2(QStringLiteral("org.freedesktop.DBus"), QStringLiteral("/org/freedesktop/DBus"),QStringLiteral("org.freedesktop.DBus"), bus);
-    const QStringList values =  dbus_iface2.call(QStringLiteral("ListNames")).arguments().at(0).toStringList();
+    QDBusReply<QStringList> reply = bus.interface()->registeredServiceNames();
+    const QStringList values = reply.value();
     // qDebug() << values;
     for (const QString &name : values){
         if (name.contains(QStringLiteral("dolphin"))){
