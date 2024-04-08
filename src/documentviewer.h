@@ -21,8 +21,7 @@ public:
     void loadFile(std::string filePath,std::string extension);
     QString viewerDocument() const;
     void setViewerDocument(const QString &newViewerDocument);
-    bool isInsideFlatpak = false;
-    bool runningFlatpak();
+
 
 
     int activeThreadId;

@@ -136,14 +136,7 @@ DocumentViewer::DocumentViewer(QObject *parent)
 {
     activeThreadId=0;
     libreofficeCommand = getLibreofficeCommand();
-    isInsideFlatpak = runningFlatpak();
-    //get temp dir path
-    if (isInsideFlatpak){
-        tempDir = "/var/tmp";
-    }
-    else{
-        tempDir = std::filesystem::temp_directory_path();
-    }
+    tempDir = std::filesystem::temp_directory_path();
 
 }
 
@@ -231,25 +224,8 @@ void DocumentViewer::reloadDocument()
 void DocumentViewer::closeActiveConversionProcess(){
 
 
-
-
     if (processIsRunning == true){
-        if (isInsideFlatpak == false){
         killpg(currentProcessPid,SIGTERM);
-        }
-        else{
-        //from inside flatpak I couldn't find a way to access the real pid and I can't close libreoffice except this way.
-        //runs a command outside the sandbox to find the pid and kill it.
-        std::string command = R"(kill $( ps -aux | grep -F "/libreoffice/program/soffice.bin --headless --nolockcheck --norestore --convert-to pdf" | grep -F " --outdir /tmp"| awk '{ print $2 }'))";
-        QProcess process;
-        process.setProgram(QStringLiteral("flatpak-spawn"));
-        process.setArguments( QStringList() << QStringLiteral("--host") << QStringLiteral("bash") << QStringLiteral("-c") << QString().fromStdString(command.c_str()));
-
-        process.start();
-        process.waitForFinished();
-       qDebug() << process.readAllStandardError();
-
-        }
         processIsRunning = false;
     }
 }
@@ -262,7 +238,6 @@ std::string DocumentViewer::getLibreofficeCommand(){
         // check if libreoffice is installed
         command = "libreoffice";
     }
-
     else if (! system("which flatpak > /dev/null 2>&1")){
         //check if libreoffice is installed with flatpak
         QProcess process;
@@ -272,22 +247,6 @@ std::string DocumentViewer::getLibreofficeCommand(){
             command = "flatpak run org.libreoffice.LibreOffice";
         }
     }
-    //if in the flatpak container
-    else if ( ! system("[ -e '/run/host/usr/bin/libreoffice' ]")){
-        // check if libreoffice is installed
-        command = "flatpak-spawn --host libreoffice";
-    }
-    else if (! system("[ -e '/run/host/usr/bin/flatpak' ]")){
-        //check if libreoffice is installed with flatpak
-        QProcess process;
-        process.start(QStringLiteral("bash"), QStringList() << QStringLiteral("-c") << QStringLiteral("flatpak-spawn --host flatpak list | grep -i libreoffice"));
-        process.waitForFinished();
-        qDebug() << process.readAllStandardError();
-        if (process.exitCode() == 0){
-            command = "flatpak-spawn --host flatpak run org.libreoffice.LibreOffice";
-        }
-    }
-
     return command;
 
 }
@@ -346,14 +305,6 @@ void DocumentViewer::setViewerDocument(const QString &newViewerDocument)
         return;
     m_viewerDocument = newViewerDocument;
     Q_EMIT viewerDocumentChanged();
-}
-
-bool DocumentViewer::runningFlatpak()
-{
-    if (getenv("container")) {
-        return true;
-    }
-    return false;
 }
 
 
