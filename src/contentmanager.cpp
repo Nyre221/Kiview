@@ -9,7 +9,7 @@
 #include <unistd.h>
 QStringList files;
 //It is used to decide which viewer should load the file.
-std::vector<std::string> textExtensions{".txt", ".sh"};
+std::vector<std::string> textExtensions{".txt", ".sh",".json"};
 std::vector<std::string> docExtensions{".pdf",".doc", ".docx", ".odt", ".ods", ".xlsx", ".xls", ".csv", ".odp", ".ppt", ".pptx"};
 std::vector<std::string> imgExtensions{".png",".jpg",".jpeg",".kra",".svgz",".svg",".webp"};
 std::vector<std::string> mediaExtensions{".mp4",".mp3",".webm"};
