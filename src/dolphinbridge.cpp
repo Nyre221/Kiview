@@ -25,12 +25,6 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
 
     //used for testing
     // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    //    if (true){
-    //        std::string path = "/home/nyre/Scrivania/example/qt6";
-    //        //        std::string path = "/home/nyre";
-    //        Manager->setFiles(path,false);
-    //        return;
-    //    }
     //used for testing
 
 
@@ -126,7 +120,7 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
                 qDebug() << selectAllError;
                 Manager->setDolphinBridgeErrorMessage(selectAllError);
                 //restore clipboard contents.
-                setClipboardContent(bus,originalClipboardContent);
+                restoreClipboardContent(bus,originalClipboardContent);
                 return;
             }
 
@@ -152,7 +146,7 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
                 qDebug() << "invalid path";
                 qDebug() << "path: " + filePath.toStdString();
                 //restore clipboard contents.
-                setClipboardContent(bus,originalClipboardContent);
+                restoreClipboardContent(bus,originalClipboardContent);
                 Manager->setDolphinBridgeErrorMessage(i18n("Error: Invalid Path"));
                 return;
             }
@@ -168,7 +162,7 @@ void DolphinBridge::start(ContentManager *Manager, char *argv[], int argc)
     }
 
     //restore clipboard contents.
-    setClipboardContent(bus,originalClipboardContent);
+    restoreClipboardContent(bus,originalClipboardContent);
     Manager->setFiles(filePath.toStdString(),fileWasSelected);
 
 
@@ -194,6 +188,58 @@ QString DolphinBridge::setClipboardContent(QDBusConnection bus,QString content)
     auto result = dbus_iface.call(QStringLiteral("setClipboardContents"),content);
     QString error = result.errorMessage();
     return error;
+}
+
+void DolphinBridge::restoreClipboardContent(QDBusConnection bus, QString content)
+{
+    // if the user had copied a file before opening the program, restoring just the text is not enough.
+    // uses bash commands to restore the mimetype
+
+    //the "file:///" prefix indicates that the last item copied to the clipboard by the user was a file or folder.
+    std::string s = content.toStdString();
+    if (! (s.rfind("file:///", 0) == 0)) {
+    //it's plain text, klipper is enough.
+        setClipboardContent(bus,content);
+        return;
+    }
+
+    std::string exec;
+    std::string copyCommand;
+    //check if it is using wayland or X11
+    if (! system("echo $XDG_SESSION_TYPE | grep -i wayland")){
+        //wayland
+        exec = "wl-copy";
+        copyCommand = "wl-copy -t 'text/uri-list' '" + content.toStdString() + "'";
+    }
+    else if ( ! system("echo $XDG_SESSION_TYPE | grep -E -i 'x11|xorg'")){
+        //X11
+        exec = "xclip";
+        copyCommand = "echo '" + content.toStdString() + "' | xclip -sel clip -t text/uri-list";
+    }
+    else{
+        //error, use klipper
+        qDebug() << "Error: Unable to identify session type. Switching to klipper...";
+        setClipboardContent(bus,content);
+        return;
+    }
+
+    //Check if the exec is installed.
+    std::string command = "which " + exec;
+    if (! system(command.c_str())){
+        //run the copyCommand
+        if (system(copyCommand.c_str())){
+            //failed, use klipper
+            qDebug() << QString::fromStdString("Error: Failed to restore clipboard content using: "+exec);
+            setClipboardContent(bus,content);
+            return;
+        }
+    }
+    else{
+        //failed, use klipper
+        qDebug() << QString::fromStdString("Error: Failed to restore clipboard content: "+exec+" is not installed");
+        setClipboardContent(bus,content);
+        return;
+    }
 }
 
 QString DolphinBridge::sendCopyFileLocationSignal(QDBusConnection bus,QString dolphinWindow)
