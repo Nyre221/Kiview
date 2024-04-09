@@ -197,7 +197,8 @@ void DolphinBridge::restoreClipboardContent(QDBusConnection bus, QString content
 
     //the "file:///" prefix indicates that the last item copied to the clipboard by the user was a file or folder.
     std::string s = content.toStdString();
-    if (! (s.rfind("file:///", 0) == 0)) {
+    //filesystem::exists: also checks if the path is valid.
+    if (! ( s.rfind("file:///", 0) == 0 && std::filesystem::exists(content.toStdString().erase(0,7)))) {
     //it's plain text, klipper is enough.
         setClipboardContent(bus,content);
         return;
