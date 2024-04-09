@@ -9,15 +9,15 @@
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0</project_license>
   <name>Kiview</name>
-  <summary>Quick preview of files and folder in Dolphin</summary>
-  <summary xml:lang="it">Anteprima rapida dei file e cartelle in Dolphin</summary>
+  <summary>Quick file preview</summary>
+  <summary xml:lang="it">Anteprima rapida dei file</summary>
   <description>
-  <p>Kiview allows you to quickly preview the contents of different file types without having to open the default application. Similar applications are Apple's Quick Look and Gnome Sushi.</p>
+  <p>Kiview lets you quickly preview various file types (text, images, videos, etc.) in Dolphin without opening the default app. Similar applications are Apple's Quick Look and Gnome Sushi.</p>
   <p>Known Issues:</p>
   <p>Currently, due to the way Kiview integrates with Dolphin, the last entry copied to the clipboard is temporarily modified and then restored. This does not cause any problems for plain text, but unfortunately cannot properly restore the original contents if the last copied item was a folder or file.</p>
   <p>Supported file types:</p>
   <p>.txt,.sh,.json,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.kra,.svgz,.svg,.mp4,.mp3,.webm,.zip,.gz,.xz,.rar</p>
-  <p xml:lang="it">Kiview ti permette di visualizzare rapidamente il contenuto di diversi tipi di file senza dover aprire l'applicazione predefinita. Applicazioni simili sono Quick Look e Gnome Sushi.</p>
+  <p xml:lang="it">Kiview ti permette di visualizzare rapidamente il contenuto di diversi tipi di file (testi, immagini, video, etc.) in Dolphin senza dover aprire l'applicazione predefinita. Applicazioni simili sono Quick Look e Gnome Sushi.</p>
   <p xml:lang="it">Problemi Noti:</p>
   <p xml:lang="it">Attualmente, a causa del modo in cui Kiview si integra con Dolphin, l'ultimo elemento copiato negli appunti viene temporaneamente modificato e poi ripristinato. Questo non comporta problemi se è solo testo, ma sfortunatamente non è in grado di ripristinare correttamente il contenuto originale se l'ultimo elemento copiato era una cartella o un file.</p>
   <p xml:lang="it">Tipi di file supportati:</p>
@@ -30,9 +30,11 @@
   <screenshots>
     <screenshot type="default">
      <image>https://raw.githubusercontent.com/Nyre221/Kiview/master/extraStuff/screenshots/screenshot1.png</image>
+     <caption>PDF document</caption>
    </screenshot>
    <screenshot>
      <image>https://raw.githubusercontent.com/Nyre221/Kiview/master/extraStuff/screenshots/screenshot2.png</image>
+     <caption>Preview of a .kra file</caption>
    </screenshot>
  </screenshots>
   <provides>
@@ -40,9 +42,6 @@
   </provides>
   <project_group>nyre</project_group>
   <content_rating type="oars-1.1"/>
-  <provides>
-    <binary>kiview</binary>
-  </provides>
   <releases>
     <release version="1.0.1" date="2024-04-06" />
   </releases>
