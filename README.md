@@ -19,12 +19,22 @@ From the terminal: `flatpak install io.github.nyre221.kiview`
 To use it you need to set a keyboard shortcut via plasma settings and invoke it while a dolphin window is active.   
 Any key combination is fine to activate the shortcut and it is only necessary to enter this command in the appropriate section: `kiview --shortcut` or `flatpak run io.github.nyre221.kiview --shortcut` (for the flatpak version).
 
+## Dolphin ServicesMenu
+https://www.pling.com/p/2148462/
+### Install:
+1) Open the dolphin settings menu (configure -> configure dolphin)
+2) Go to "Context Menu"
+3) Click on "Download New Services"
+4) In the search bar write "Kiview"
+
 #### Example:
 ![Schermata_20240403_172653](https://github.com/Nyre221/Kiview/assets/104171042/14ed7534-f2cc-4c92-85da-6ce7b1ccfd73)
 
 ![Screenshot-30-11-2023-CET-9](https://github.com/Nyre221/Kiview/assets/104171042/4e06a068-3d51-4b57-adcf-f42693b92e18)
 
 ![Screenshot-30-11-2023-CET-10](https://github.com/Nyre221/Kiview/assets/104171042/37b1fb2c-5e89-48fb-b5cf-25750734fd14)
+
+![screenshot1](https://github.com/Nyre221/Kiview/assets/104171042/69f0806b-7c17-487d-a5dd-e4a6892b2b31)
 
 
 ### If you want to support my work:
