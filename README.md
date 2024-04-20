@@ -4,6 +4,9 @@ Kiview gives the user the ability to quickly preview different file types withou
 .txt,.sh,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.kra,.svgz,.svg,.mp4,.mp3,.webm,.zip,.gz,.xz,.rar
 
 ## Installation
+### Flathub
+https://flathub.org/apps/io.github.nyre221.kiview  
+From the terminal: `flatpak install io.github.nyre221.kiview`
 ### Kde Neon (manual update)
 `wget -O kiview.deb  $(curl -s https://api.github.com/repos/Nyre221/Kiview/releases/latest | grep browser_download_url | cut -d '"' -f 4)`  
 `sudo dpkg -i ./kiview.deb`  
