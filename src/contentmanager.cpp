@@ -136,12 +136,10 @@ void ContentManager::loadFileAtIndex(int index){
 
 
     currentFilePath = files.at(index).toStdString();
-    std::string extension = currentFilePath.extension().string();
+    std::string extension = getFileExtension(currentFilePath);
 
     //sets what the current file name is in the "header bar" of the interface.
     setFileName(QString::fromStdString(currentFilePath.filename().string()));
-    //It is used to understand if is a text file or not.
-    std::string command = R"(file --mime-type ')" + currentFilePath.string() + R"(' | grep text/  )";
 
     //load the file with the correct viewer.
     if (std::filesystem::is_directory(currentFilePath)) {
@@ -168,15 +166,37 @@ void ContentManager::loadFileAtIndex(int index){
         m_containerViewer->loadFile(currentFilePath.string(),true,extension);
         setCurrentViewer(QStringLiteral("container_viewer"));
     }
-    else if (! (system(command.c_str()))) {
-        //uses a subprocess to figure out if it's a plain text file.
-        m_textViewer->loadFile(currentFilePath.string());
-        setCurrentViewer(QStringLiteral("text_viewer"));
-    }
     else{
         setCurrentViewer(QStringLiteral("fallback_viewer"));
     }
 
+
+}
+
+std::string ContentManager::getFileExtension(std::filesystem::path filePath)
+{
+    std::string extension = filePath.extension().string();
+    if (extension.length() == 0){
+        //The extension is missing.
+        QProcess process;
+        //"file" is used to understand if is a text file or not.
+        process.setProgram(QStringLiteral("file"));
+        process.setArguments( QStringList() << QStringLiteral("--mime-type") << QString().fromStdString(filePath.string().c_str()));
+        process.start();
+        process.waitForFinished();
+        std::string output = process.readAll().toStdString();
+        // Extract the substring after the character ':'
+        size_t pos = output.find(':');
+        if (pos != std::string::npos) {
+            std::string subStr = output.substr(pos);
+            // check if it is a text file
+            if ( subStr.find("text/") != std::string::npos) {
+                extension=".txt";
+            }
+        }
+    }
+
+    return extension;
 
 }
 

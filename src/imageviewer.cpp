@@ -40,12 +40,9 @@ public:
             return;
         }
 
-        //command to use to extract the image from the archive.
-        std::string command = "unzip -o '" + path + "' mergedimage.png -d " + tempDir;
         QProcess process;
-        //setsid is used to also kill the children of the subprocess.
-        process.setProgram(QStringLiteral("setsid"));
-        process.setArguments( QStringList() << QStringLiteral("bash") << QStringLiteral("-c") <<  QString::fromStdString(command) );
+        process.setProgram( QString::fromStdString("unzip"));
+        process.setArguments( QStringList() <<   QString::fromStdString("-o") <<  QString::fromStdString(path)  <<  QString::fromStdString("mergedimage.png") << QString::fromStdString("-d") << QString::fromStdString(tempDir));
         process.start();
         process.waitForStarted();
         mainClass->currentProcessPid = process.processId();
@@ -165,7 +162,7 @@ void ImageViewer::stopViewer()
 
 void ImageViewer::closeActiveSubProcess(){
     if (processIsRunning == true){
-        killpg(currentProcessPid,SIGTERM);
+        kill(currentProcessPid,SIGTERM);
         processIsRunning = false;
     }
 }

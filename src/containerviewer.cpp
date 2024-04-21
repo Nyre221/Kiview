@@ -108,20 +108,22 @@ public:
         }
 
         std::string exec;
-        std::string command;
+        QStringList args;
 
         //choose the command based on the archive type.
         if (extension  ==  ".zip"){
             exec = "zipinfo";
-            command = "zipinfo -1 '" + path +"'";
+            args.append(QString::fromStdString("-1"));
         }
         else if (extension  ==  ".gz" || extension  ==  ".xz"){
             exec = "tar";
-            command = "tar --list -f '" + path +"'";
+            args.append(QString::fromStdString("--list"));
+            args.append(QString::fromStdString("-f"));
+            // command = "tar --list -f '" + path +"'";
         }
         else if (extension  ==  ".rar"){
             exec = "unrar";
-            command = "unrar l  '" + path +"' " + R"(| grep  -Fv '..D..' | cut -d' ' -f13-100 | grep -v "Date    Time   Name" | grep -v "                  " | grep -vi "Alexander Roshal" | sed '/^$/d' | sed 's/^[ \t]*//')";
+            args.append(QString::fromStdString("lb"));
         }
 
         //checks if the executable exists.
@@ -133,10 +135,9 @@ public:
             return;
         }
 
-        //setsid is used to also close the children of the subprocess. not required in this case.
         QProcess process;
-        process.setProgram(QStringLiteral("setsid"));
-        process.setArguments( QStringList() << QStringLiteral("bash") << QStringLiteral("-c") <<  QString::fromStdString(command) );
+        process.setProgram(QString::fromStdString(exec));
+        process.setArguments( QStringList() <<  args << QString::fromStdString(path) );
         process.start();
         process.waitForStarted();
         mainClass->currentProcessPid = process.processId();
@@ -313,7 +314,7 @@ void ContainerViewer::stopViewer()
 
 void ContainerViewer::closeActiveSubProcess(){
     if (processIsRunning == true){
-        killpg(currentProcessPid,SIGTERM);
+        kill(currentProcessPid,SIGTERM);
         processIsRunning = false;
     }
 }

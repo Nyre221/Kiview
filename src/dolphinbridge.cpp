@@ -195,10 +195,10 @@ void DolphinBridge::restoreClipboardContent(QDBusConnection bus, QString content
     // if the user had copied a file before opening the program, restoring just the text is not enough.
     // uses bash commands to restore the mimetype
 
-    //the "file:///" prefix indicates that the last item copied to the clipboard by the user was a file or folder.
     std::string s = content.toStdString();
-    //filesystem::exists: also checks if the path is valid.
-    if (!( s.rfind("file:///", 0) == 0)) {
+    //the "file:///" prefix indicates that the last item copied to the clipboard by the user was a file or folder.
+    //restores content via klipper if it finds blacklisted characters.
+    if (! s.rfind("file:///", 0) == 0 || s.rfind(";") != std::string::npos || s.rfind("&") != std::string::npos || s.rfind("'") != std::string::npos || s.rfind("#") != std::string::npos)  {
     //it's plain text, klipper is enough.
         setClipboardContent(bus,content);
         return;

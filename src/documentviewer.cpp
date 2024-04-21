@@ -20,6 +20,7 @@ public:
     QProcess process;
     std::string path;
     std::string libreofficeCommand;
+    bool isLibreofficeFlatpak;
     std::string tempDir;
     DocumentViewer *mainClass;
     // It is used to mitigate a problem that occurs when the PC has just been started and the waiting time (waitForFinished) of QProcess is not respected.
@@ -39,12 +40,18 @@ public:
 
         std::string result;
         std::string standardError;
-        std::string command = libreofficeCommand + " --headless    --nolockcheck --norestore --convert-to pdf '" + path + "' --outdir " + tempDir;
+        QStringList libreofficeArgs = QStringList() << QString::fromStdString("run") << QString::fromStdString("run org.libreoffice.LibreOffice") << QString::fromStdString("--headless")  << QString::fromStdString("--nolockcheck") << QString::fromStdString("--norestore")
+                                                        << QString::fromStdString("--convert-to")   << QString::fromStdString("pdf") << QString::fromStdString(path) << QString::fromStdString("--outdir") << QString::fromStdString(tempDir);
         QProcess process;
 
+        process.setProgram(QString::fromStdString(libreofficeCommand));
 
-        process.setProgram(QStringLiteral("setsid"));
-        process.setArguments( QStringList() << QStringLiteral("bash") << QStringLiteral("-c") << QString::fromStdString(command) );
+        if (isLibreofficeFlatpak){
+            process.setArguments(QStringList() << QString::fromStdString("run")   << QString::fromStdString("org.libreoffice.LibreOffice") << libreofficeArgs );
+        } else{
+            process.setArguments(libreofficeArgs);
+
+        }
         process.start();
         process.waitForStarted();
         mainClass->currentProcessPid = process.processId();
@@ -187,6 +194,7 @@ void DocumentViewer::convertDocument(std::string path){
     t->mainClass = this;
     t->path = path;
     t->tempDir = tempDir;
+    t->isLibreofficeFlatpak = isLibreofficeFlatpak;
     t->start();
 
 }
@@ -225,7 +233,19 @@ void DocumentViewer::closeActiveConversionProcess(){
 
 
     if (processIsRunning == true){
-        killpg(currentProcessPid,SIGTERM);
+
+        if (isLibreofficeFlatpak){
+            // Unfortunately this is the only way I've found to close the Flatpak version of libreoffice.
+            std::string command = R"(kill $( ps -aux | grep -F "/soffice.bin" | grep -F " --headless --nolockcheck --norestore --convert-to pdf" | grep -F " --outdir"| awk '{ print $2 }'))";
+            QProcess process;
+            process.setProgram(QStringLiteral("bash"));
+            process.setArguments( QStringList() << QStringLiteral("-c") << QString().fromStdString(command.c_str()));
+            process.start();
+            process.waitForFinished();
+
+        }else{
+            kill(currentProcessPid,SIGTERM);
+        }
         processIsRunning = false;
     }
 }
@@ -237,6 +257,7 @@ std::string DocumentViewer::getLibreofficeCommand(){
     if (! system("which libreoffice > /dev/null 2>&1")){
         // check if libreoffice is installed
         command = "libreoffice";
+        isLibreofficeFlatpak=false;
     }
     else if (! system("which flatpak > /dev/null 2>&1")){
         //check if libreoffice is installed with flatpak
@@ -244,7 +265,8 @@ std::string DocumentViewer::getLibreofficeCommand(){
         process.start(QStringLiteral("bash"), QStringList() << QStringLiteral("-c") << QStringLiteral("flatpak list | grep -i libreoffice"));
         process.waitForFinished();
         if (process.exitCode() == 0){
-            command = "flatpak run org.libreoffice.LibreOffice";
+            isLibreofficeFlatpak=true;
+            command = "flatpak";
         }
     }
     return command;

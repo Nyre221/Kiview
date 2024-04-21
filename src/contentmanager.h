@@ -88,6 +88,7 @@ private:
     bool switchEnabled = true;
     void stopViewers();
     void loadFileAtIndex( int index);
+    std::string getFileExtension(std::filesystem::path filePath);
     std::filesystem::path currentFilePath;
     std::filesystem::path currentFile;
 

@@ -88,6 +88,7 @@ private:
     bool m_reloadButtonVisible;
     bool m_loadingBarVisible;
     bool m_helpPageLinkVisible;
+    bool isLibreofficeFlatpak = false;
 };
 
 #endif // DOCUMENTVIEWER_H
