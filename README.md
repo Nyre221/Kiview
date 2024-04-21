@@ -1,7 +1,7 @@
 # Kiview
 Kiview gives the user the ability to quickly preview different file types without the need to launch the default application.
 ### Supported file types:
-.txt,.sh,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.kra,.svgz,.svg,.mp4,.mp3,.webm,.zip,.gz,.xz,.rar
+.txt,.sh,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.kra,.svgz,.svg,.mp4,.mp3,.webm,.webp,.zip,.gz,.xz,.rar
 
 ## Installation
 ### Flathub
