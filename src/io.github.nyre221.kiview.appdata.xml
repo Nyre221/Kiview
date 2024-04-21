@@ -14,10 +14,10 @@
   <description>
   <p>Kiview lets you quickly preview various file types (text, images, videos, etc.) in Dolphin without opening the default app. Similar applications are Apple's Quick Look and Gnome Sushi.</p>
   <p>Supported file types:</p>
-  <p>.txt,.sh,.json,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.kra,.svgz,.svg,.mp4,.mp3,.webm,.zip,.gz,.xz,.rar</p>
+  <p>.txt,.sh,.json,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.jxl,.kra,.svgz,.svg,.mp4,.mp3,.webm,.zip,.gz,.xz,.rar</p>
   <p xml:lang="it">Kiview ti permette di visualizzare rapidamente il contenuto di diversi tipi di file (testi, immagini, video, etc.) in Dolphin senza dover aprire l'applicazione predefinita. Applicazioni simili sono Quick Look e Gnome Sushi.</p>
   <p xml:lang="it">Tipi di file supportati:</p>
-  <p xml:lang="it">.txt,.sh,.json,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.kra,.svgz,.svg,.mp4,.mp3,.webm,.webp,.zip,.gz,.xz,.rar</p>
+  <p xml:lang="it">.txt,.sh,.json,.pdf,.doc,.docx,.odt,.ods,.xlsx,.xls,.csv,.odp,.ppt,.pptx,.png,.jpg,.jpeg,.jxl,.kra,.svgz,.svg,.mp4,.mp3,.webm,.webp,.zip,.gz,.xz,.rar</p>
   </description>
   <url type="bugtracker">https://github.com/Nyre221/Kiview</url>
   <url type="homepage">https://github.com/Nyre221/Kiview</url>

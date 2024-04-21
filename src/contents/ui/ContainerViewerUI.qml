@@ -211,7 +211,7 @@ Item{
         else if (["pdf"].includes(extension)){
             icon = "application-pdf"
         }
-        else if (["png", "jpg", "jpeg", "webp", "svg", "svgz"].includes(extension)){
+        else if (["png", "jpg", "jpeg", "webp", "svg", "svgz","jxl"].includes(extension)){
             icon = "image-png"
         }
         else if (["mp4"].includes(extension)){
