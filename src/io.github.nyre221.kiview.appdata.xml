@@ -39,6 +39,7 @@
   <project_group>nyre</project_group>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="1.1" date="2024-04-22" />
     <release version="1.0.2" date="2024-04-10" />
     <release version="1.0.1" date="2024-04-06" />
   </releases>
