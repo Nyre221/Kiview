@@ -1,3 +1,6 @@
+## Project moved to Gitlab: https://invent.kde.org/danagost/Kiview
+
+
 # Kiview
 Kiview gives the user the ability to quickly preview different file types without the need to launch the default application.
 ### Supported file types:
