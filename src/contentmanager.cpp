@@ -24,6 +24,11 @@ ContentManager::ContentManager(QObject *parent)
 
 void ContentManager::setFiles(std::string path,bool fileWasSelected ){
 
+    if (path[path.size() - 1] == '/') {
+        //Removes the "/" character at the end of the string if it is present.
+        //this avoids crashing the program if "fileWasSelected" is true.
+        path = path.substr(0, path.size() - 1);
+    }
     std::filesystem::directory_entry filePath = std::filesystem::directory_entry{path};
 
     //file was selected
